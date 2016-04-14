@@ -1,0 +1,21 @@
+{
+  "locals": {
+    "url": "http://niftylettuce.com/",
+    "name": "Niftylettuce Blog",
+    "owner": "niftylettuce"
+  },
+  "plugins": [
+    "./node_modules/wintersmith-less"
+  ],
+  "require": {
+    "moment": "moment",
+    "_": "underscore"
+  },
+  "jade": {
+    "pretty": true
+  },
+  "markdown": {
+    "smartLists": true,
+    "smartypants": true
+  }
+}

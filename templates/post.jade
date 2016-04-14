@@ -1,0 +1,18 @@
+
+extends layout
+
+block content
+  if page.metadata.image
+    img(src=page.metadata.image).meta-image
+  h1= page.metadata.title
+  hr
+  - var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+  p= months[page.metadata.date.getMonth()] + ' ' + page.metadata.date.getFullYear()
+  if (page.metadata.guest)
+    .guest-post
+      p!= page.html
+      .guest-bottom
+    p: i Continued&hellip;
+    p This was a guest post for <strong>#{page.metadata.guest.name}</strong>.  To read the full article <a href="#{page.metadata.guest.url}">click here</a>.
+  else
+    p!= page.html

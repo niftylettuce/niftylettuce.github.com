@@ -1,0 +1,61 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title= '@niftylettuce - ' + page.metadata.title
+    meta(name='description', content=page.metadata.description)
+    meta(property='og:site_name', content='niftylettuce')
+    meta(property='og:type', content='website')
+    meta(property='og:title', content='@niftylettuce - ' + page.metadata.title)
+    meta(property='og:description', content=page.metadata.description)
+    if (page.metadata.image)
+      meta(property='og:image', content='http://niftylettuce.com/' + page.parent[page.metadata.image]._filename)
+    else
+      meta(property='og:image', content='http://niftylettuce.com/img/lettuce.png')
+    meta(name="HandheldFriendly", content="True")
+    meta(name="MobileOptimized", content="320")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(http-equiv="cleartype", content="on")
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/css/prettify.css')
+  body
+    #sidebar
+      a(href='/')#logo
+        img(src='/img/lettuce.png')
+      script(src="https://www.gittip.com/assets/widgets/0002.js", data-gittip-username="niftylettuce")
+    #content
+      block content
+        h1 Latest Posts
+        - var posts = contents.posts
+        ul
+          each post, url in posts
+            if url !== '.DS_Store'
+              li: a(href='posts/' + url + '/')= post['index.md'].metadata.title
+      hr
+      small
+        a(href='mailto:niftylettuce@gmail.com') niftylettuce@gmail.com
+        | &nbsp;|&nbsp;
+        a(href='https://github.com/niftylettuce') Github
+        | &nbsp;|&nbsp;
+        a(href='http://twitter.com/niftylettuce') Twitter
+        | &nbsp;|&nbsp;
+        a(href='http://eepurl.com/AlJH1') Updates
+        | &nbsp;|&nbsp;
+        a(href='/feed.xml') RSS/XML Feed
+      a(href='http://wintersmith.io/', title='Powered by Wintersmith')#wintersmith: img(src='/img/wintersmith.svg', alt='Powered by Wintersmith')
+      p
+        a(href='https://www.digitalocean.com/')
+          img(src='/img/digital-ocean-badge.png')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+    script.
+      window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')
+    script(src='/js/vendor/prettify.js')
+    script(src='/js/main.js')
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');

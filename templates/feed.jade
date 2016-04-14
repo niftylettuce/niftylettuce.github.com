@@ -1,0 +1,25 @@
+doctype xml
+rss(version='2.0',
+    xmlns:content='http://purl.org/rss/1.0/modules/content/',
+    xmlns:wfw='http://wellformedweb.org/CommentAPI/',
+    xmlns:dc='http://purl.org/dc/elements/1.1/'
+    xmlns:atom='http://www.w3.org/2005/Atom')
+  channel
+    title= '@niftylettuce - Blog'
+    - var posts = contents.posts
+    atom:link(href='http://niftylettuce.com/feed.xml', rel='self', type='application/rss+xml')
+    link= 'http://niftylettuce.com'
+    description= 'The blog of @niftylettuce'
+    //-pubDate= articles[0].rfc822date
+    generator Wintersmith - https://github.com/jnordberg/wintersmith
+    language en
+    each post, url in posts
+      if url !== '.DS_Store'
+        - var permalink = locals.url + 'posts/' + url
+        item
+          title= post['index.md'].metadata.title
+          link= permalink
+          pubDate= moment(post['index.md'].metadata.date).format('ddd, DD MMM YYYY HH:mm:ss ZZ')
+          guid(isPermaLink='true')= permalink
+          author= 'niftylettuce'
+          description= post['index.md']._content
