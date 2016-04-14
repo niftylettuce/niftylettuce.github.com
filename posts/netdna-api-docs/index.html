@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - NetDNA API Docs</title>
+    <meta name="description" content="Converting NetDNA API docs from HTML to Markdown.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - NetDNA API Docs">
+    <meta property="og:description" content="Converting NetDNA API docs from HTML to Markdown.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>NetDNA API Docs</h1>
+      <hr>
+      <p>May 2013</p>
+      <div class="guest-post">
+        <p><p>Over the past weeks I’ve helped out NetDNA by converting their API docs from hard-coded HTML to auto-generated Markdown with Github Pages.</p>
+<p>They asked me to document it, so here’s how it went from start to finish.  If you want to skip all this, then go check out their docs for yourself here:</p>
+<p><a href="http://docs.netdna.com">http://docs.netdna.com</a></p>
+<h2 id="cleanup">Cleanup</h2>
+<p>The existing docs were OK, but needed cleanup for easier management and a new design.  Here’s a screenshot of what they looked like and here’s the <a href="https://gist.github.com/niftylettuce/e40b526a69ed2908aec4/raw/2e86db484370105d73cd5124120895cbb6d97975/netdna-docs.html">HTML</a>.</p>
+<p><img src="http://i.imgur.com/hSailR6.png" alt="NetDNA Original API Docs Screenshot" title="NetDNA Original API Docs Screenshot"></p>
+<p>Key issues:</p>
+<ul>
+<li>Navigation was not friendly (no affix/sidebar that scrolls with page)</li>
+<li>No search for docs, you had to manually do CTRL+F and that took a while</li>
+<li>Everything was hard-coded in HTML, and making changes took a lot of time copy/paste</li>
+<li>Code examples were missing</li>
+<li>Lacked instructions for getting started</li>
+<li>No support info listed for integration/dev help</li>
+<li>API wrappers for languages weren’t anywhere to be found</li>
+</ul>
+<h2 id="migration-from-html-to-markdown">Migration from HTML to Markdown</h2>
+<p>We had to convert HTML to Markdown.  Not an easy process with custom styling and getting GFM tables parsed correctly.  Doing this by hand would take a while (e.g. writing <code>&lt;h1&gt;Blah&lt;/h1&gt;</code> to <code># Blah</code> and so on…) so a script to scrape/parse did the trick.</p>
+<p>It took this <a href="https://github.com/niftylettuce/node-netdna-parser/blob/master/scrape.js">100 LOC script</a> to automate it, but it worked flawlessly.</p>
+<p>Headaches may have occured while writing this regexp:</p>
+<pre><code class="lang-js">md = md.replace(<span class="regexp">/&lt;table&gt;(?:(?:(?!&lt;\/table&gt;)[\s\S])*?)&lt;\/table&gt;/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">html</span>) </span>{
+  <span class="keyword">return</span> parseTable(html)
+})
+</code></pre>
+<p>Not too fancy… but it worked!</p>
+<p><a href="http://npmjs.org">NPM</a> modules used:</p>
+<ul>
+<li><a href="https://npmjs.org/package/cheerio">cheerio</a> - parse HTML with jQuery helper functions and cleanup of HTML</li>
+<li><a href="http://nodejs.org/api/fs.html">fs</a> - read existing HTML and write Markdown output</li>
+<li><a href="http://nodejs.org/api/path.html">path</a> - namely <code>path.join</code> to join dirs</li>
+<li><a href="https://npmjs.org/package/to-markdown">to-markdown</a> - convert HTML to markdown (still needs some touchups after this)</li>
+<li><a href="https://npmjs.org/package/htmltidy">htmltidy</a> - beautify the HTML for any tab/space issues</li>
+<li><a href="https://npmjs.org/package/htmlparser2">htmlparser2</a> - parse the HTML for GFM tables</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<p>They wanted to integrate <a href="https://github.com/twitter/bootstrap">Twitter Bootstrap</a>, and so I had a module called <a href="https://npmjs.org/package/readme-docs">readme-docs</a> which was used for a bit (I recommend it if you want something simple for your Readme.md files).</p>
+<p>However, more control over HTML/CSS without having to hack around with a CLI was essential – so we couldn’t use that module.</p>
+<p><img src="http://wintersmith.io/images/wintersmith.svg" alt="Wintersmith" title="Wintersmith"></p>
+<p>I decided to use <a href="http://jnordberg.github.io/wintersmith/">wintersmith</a> to write and finish the <a href="https://github.com/netdna/netdna.github.com/">new stack</a>.  Wintersmith is a blog engine I used in the past for setting up <a href="http://startupsupper.com">StartupSupper</a>, so setup was straightforward.</p>
+<p>This turned out to be the best decision, since this module lets you easily deploy pages to Github (e.g. a blog) while letting you use <a href="http://nodejs.org">Node</a> for builds.</p>
+<p>Being able to use Node with <a href="http://lesscss.org/">LESS</a> and <a href="http://jade-lang.com/">Jade</a> for <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">Github Pages</a> was the icing on the cake.</p>
+<p>Adding <a href="https://github.com/netdna/netdna.github.com/blob/source/Instructions.md">instructions</a> to let future maintainers have sanity was the last step.</p>
+<h2 id="github-pages">Github Pages</h2>
+<p>Setting up  generated docs at <a href="http://docs.netdna.com">http://docs.netdna.com</a> was relatively simple and straightforward.</p>
+<p>We added a <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages#setting-the-domain-in-your-repo)">CNAME</a> in “master” branch,  set DNS to <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages#setting-up-dns">point to Github</a>, and had our wintersmith project in the “source” branch.</p>
+<p><img src="http://pages.github.com/images/logo-pages-1x.png" alt="Github Pages" title="Github Pages"></p>
+<p><a href="http://gruntjs.com/">Grunt</a> was used for the build process, and I pulled the <a href="https://github.com/netdna/netdna.github.com/blob/source/Gruntfile.js">Gruntfile</a> out of StartupSupper (<a href="http://www.catonmat.net/">good coders code, great reuse</a>).</p>
+<p>Had some issues when I first tried running <code>grunt</code> to deploy to <a href="http://netdna.github.io">http://netdna.github.io</a> (kept getting storage errors) &rarr; but then I soon realized Github was down… and then back up within minutes!</p>
+<p>Making updates to their API is now easy.</p>
+<pre><code class="lang-bash">λ ~/Public/netdna.github.com/ <span class="built_in">source</span> grunt
+Running <span class="string">"setup"</span> task
+Creating ./_deploy folder
+Initiating git repo
+Adding github to remotes as origin
+Setting master branch remote
+Setting master branch merge
+
+Running <span class="string">"deploy"</span> task
+Resetting repo
+Building site
+Adding all files from ./_deploy
+Getting last commit from <span class="built_in">source</span> branch
+Make commit of changes with last commit msg from <span class="built_in">source</span> branch
+Push changes to github
+
+Done, without errors.
+</code></pre>
+<p>Final result…</p>
+<p><img src="http://i.imgur.com/kb5DoFx.png" alt="Final Result" title="Final Result"></p>
+</p>
+        <div class="guest-bottom"></div>
+      </div>
+      <p><i>Continued&hellip;</i></p>
+      <p>This was a guest post for <strong>NetDNA</strong>.  To read the full article <a href="http://blog.netdna.com/developer/converting-our-api-docs-from-closed-to-open/">click here</a>.</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

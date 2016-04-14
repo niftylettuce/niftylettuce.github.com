@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
+    <meta name="description" content="How-to set up automated continuous integration and deployment setup with graceful and zero-downtime restarts for Node.js using GitHub, PM2, Digital Ocean, and SemaphoreCI.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI">
+    <meta property="og:description" content="How-to set up automated continuous integration and deployment setup with graceful and zero-downtime restarts for Node.js using GitHub, PM2, Digital Ocean, and SemaphoreCI.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</h1>
+      <hr>
+      <p>April 2016</p>
+      <p><blockquote>
+<p><strong>tldr;</strong> This article shows you how to configure an insanely simple
+automated continuous integration and deployment setup for a <a href="https://nodejs.org/en/">Node.js</a>
+app using <a href="https://github.com/">GitHub</a>, <a href="https://github.com/Unitech/pm2">PM2</a>, <a href="https://m.do.co/c/a7fe489d1b27">Digital Ocean</a>, and
+<a href="https://semaphoreci.com">SemaphoreCI</a>.  I wrote it because nothing like this in its
+entirety exists.  It should take you 30 minutes to set up properly.</p>
+</blockquote>
+<p><img src="https://i.imgur.com/dfvLUpa.png" alt="CI PM2 Node GitHub Server Setup"></p>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="#preface">Preface</a></li>
+<li><a href="#1-create-your-droplet">1. Create your Droplet</a></li>
+<li><a href="#2-write-your-node-app-file">2. Write your Node App File</a></li>
+<li><a href="#3-set-up-semaphoreci">3. Set up SSH for SemaphoreCI</a></li>
+<li><a href="#4-add-new-github-deployment-key">4. Add new GitHub Deployment Key</a></li>
+<li><a href="#5-share-varwww-access">5. Share /var/www Access</a></li>
+<li><a href="#6-configure-pm2-for-deployment">6. Configure PM2 for Deployment</a></li>
+<li><a href="#7-pm2-deployment-commands">7. PM2 Deployment Commands</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+<h2 id="preface">Preface</h2>
+<p>I’ve used or explored nearly every CI testing tool there is for Node.js
+(maybe?). I have tried <a href="https://travis-ci.com/">TravisCI</a>, but grew tired of constant downtime
+and slow, very slow build times (…OK, the builds ran fast, but they did not
+kick off quickly!). Also I’ve tried <a href="https://circleci.com/">CircleCI</a>, but their founders
+<a href="https://twitter.com/niftylettuce/status/672544974899023872">removed my</a> thoughts from their community because they didn’t
+agree to allow the file name for YAML config to be <code>.circle.yml</code> instead of
+<code>circle.yml</code>.  I also faced troubles while trying to configure and set up
+<a href="https://jenkins.io/">Jenkins</a> (though it was while I was working with an inexperienced
+team, whom were the ones setting it up).  I’ve also looked at
+<a href="https://app.shippable.com/">Shippable</a>, but it really didn’t interest me, just like the rest
+&ndash; because I now enjoy working with <a href="https://semaphoreci.com">SemaphoreCI</a> &ndash;
+namely since the prodigy <a href="https://github.com/tj">TJ Holowaychuk</a> recommended it to me.</p>
+<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Definitely the nicest CI I&#39;ve used <a href="https://t.co/ykgXUcLK1o">https://t.co/ykgXUcLK1o</a>, the others feel clunky</p>&mdash; TJ Holowaychuk (@tjholowaychuk) <a href="https://twitter.com/tjholowaychuk/status/670481124582387712">November 28, 2015</a></blockquote></p>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>For anyone interested in getting into the automated CI deployment business,
+it’s relatively straightforward to market yourself &ndash; just list yourself
+in all the Wikipedia articles, on Quora (with some upvote magic), have a good
+service that doesn’t shut down or lie about build times, and have clear docs.
+If you do those four things, you’re on the way to at least some passive income!</p>
+<p>With regards to server hosting, I chose Digital Ocean because they rock.
+I have never had a problem with them in over five years.  That’s something!
+I also printed t-shirts for Digital Ocean before I sold Teelaunch, and really
+liked working with them.</p>
+<p>Not only all that, but their service has great uptime, and their <del>boxes</del>
+“droplets” are really fast to set up and reliable.  I’m not a huge fan of
+using Amazon EC2 and AWS in general for building <a href="https://github.com/niftylettuce/rapid-mvp-standards">Rapid MVP’s</a> (of course
+I would definitely use load balancing or something for scaling an app that has
+thousands of users across the world).  If your first question about building
+an app is “How can I scale it?” or “Will Digital Ocean let me scale?” &ndash;
+take my advice, you’re doing it wrong.  Stop it.  Think <a href="https://github.com/niftylettuce/rapid-mvp-standards">Rapid MVP</a>.</p>
+<blockquote>
+<p>To put it simply, Amazon has an interface that resembles a wild jungle with
+overgrown vines on every tree, and Digital Ocean’s interface is a beautiful
+oasis in a vast VPS desert.</p>
+<p>As a side note, I can almost guarantee you that sometime in the future,
+everyone will want barebones boxes connected to ethernet plugs. Because imagine
+when <em>everyone</em> has fiber internet and anyone can host their e-commerce store
+from a <a href="http://amzn.to/1WqX3pZ">RaspberryPI</a> running from their kitchen table.</p>
+</blockquote>
+<h2 id="1-create-your-droplet">1. Create your Droplet</h2>
+<p>First, you need a Digital Ocean account.  Be patient as their signup process
+may require you to verify your email and enter your credit card.</p>
+<blockquote>
+<p>Sign up with this link to get $10 of free credit (2 months of hosting):
+<a href="https://m.do.co/c/a7fe489d1b27">https://m.do.co/c/a7fe489d1b27</a></p>
+</blockquote>
+<p>When you create your Digital Ocean (“DO”) droplet be sure to only allow SSH
+only access and add your SSH key to Digital Ocean.  You can do this from DO’s
+dashboard and you can find more about this on <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets">a Digital Ocean article</a>.</p>
+<blockquote>
+<p>Make sure you create a droplet using the latest stable Ubuntu release.</p>
+</blockquote>
+<p><img src="https://i.imgur.com/2yroKWo.png" alt="Digital Ocean Droplet"></p>
+<p>SSH into the droplet and install dependencies for your stack with Node.
+In my case, I needed to install Node, MongoDB, and Redis.  Of course, MongoDB
+and Redis are optional dependencies, but I use them because they allow me to
+build <a href="https://github.com/niftylettuce/rapid-mvp-standards">Rapid MVP’s</a> (quick prototypes in other words).  Also, I really
+like to use <a href="https://github.com/creationix/nvm">NVM</a> to manage various version of Node installed, which
+was created by another prodigy, <a href="https://github.com/creationix">Tim Caswell</a>.</p>
+<blockquote>
+<p>Make sure you replace all instances in this article of <code>droplet-ip-address</code>
+with the IP address given to you by Digital Ocean for your droplet.</p>
+</blockquote>
+<pre><code class="lang-bash">ssh root@droplet-ip-address
+</code></pre>
+<p>Install the basic requirements needed for the server:</p>
+<pre><code class="lang-bash">sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install vim build-essential libssl-dev git unattended-upgrades authbind openssl fail2ban
+</code></pre>
+<p>Install <a href="https://github.com/creationix/nvm">NVM</a> and set it up to use the latest stable version:</p>
+<pre><code class="lang-bash">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+nvm install stable
+nvm <span class="built_in">alias</span> default stable
+</code></pre>
+<p>Install <a href="https://github.com/Unitech/pm2">PM2</a>, which will handle deployments for us and manage our processes:</p>
+<pre><code>npm i -g pm2
+</code></pre><p>Install MongoDB, which is optional:</p>
+<pre><code class="lang-bash">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+<span class="built_in">echo</span> <span class="string">"deb http://repo.mongodb.org/apt/ubuntu "</span>$(lsb_release -sc)<span class="string">"/mongodb-org/3.0 multiverse"</span> | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+service mongod status
+</code></pre>
+<p>Install Redis, which is optional:</p>
+<pre><code class="lang-bash">sudo add-apt-repository ppa:chris-lea/redis-server
+sudo apt-get update
+sudo apt-get install redis-server
+redis-benchmark -q -n 1000 -c 10 -P 5
+<span class="built_in">source</span> ~/.profile
+</code></pre>
+<p>You might also want to look into installing <code>fail2ban</code>, changing the default
+SSH port, and remove password-based login access. You can find how to do this
+from this section in my <a href="https://github.com/niftylettuce/amazon-ec2-node-stack#ubuntu-security-configuration">security article</a>, or just Google it.</p>
+<h2 id="2-write-your-node-app-file">2. Write your Node App File</h2>
+<p>This article assumes you already have created a GitHub repository for your
+project and that you already have some <code>app.js</code> file in the root of it.  If you
+haven’t done that yet, then this section is for you.  This section also
+describes how to configure that <code>app.js</code> file for zero-downtime and graceful
+reloading upon deployment of code.</p>
+<p>For the purpose of this article, I share a basic app example that will respond
+with “hello world” when you visit your droplet later on (over port <code>3000</code>).</p>
+<p>Answer yes to all the prompts or just hit <code>ENTER</code> to breeze through it:</p>
+<pre><code class="lang-bash">npm init
+</code></pre>
+<p>Now save the basic <code>express</code> dependency:</p>
+<pre><code class="lang-bash">npm i --save express
+</code></pre>
+<p>Create a new file called <code>app.js</code> (or edit your existing to include <code>SIGINT</code>):</p>
+<pre><code class="lang-bash">vim app.js
+</code></pre>
+<pre><code class="lang-js"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);
+<span class="keyword">var</span> app = express();
+
+app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>{
+  res.send(<span class="string">'hello world'</span>)
+});
+
+app.listen(<span class="number">3000</span>);
+
+process.on(<span class="string">'SIGINT'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+
+  <span class="comment">// <span class="doctag">TODO:</span> do stuff here to clean up before reload</span>
+  <span class="comment">// (e.g. close out DB connections, queue a job)</span>
+
+  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="comment">// 300ms later the process kills itself to allow a restart</span>
+    process.exit(<span class="number">0</span>);
+  }, <span class="number">300</span>);
+
+});
+</code></pre>
+<p>Let’s test this out locally before you bother to continue further.</p>
+<pre><code class="lang-bash">node app.js
+</code></pre>
+<blockquote>
+<p>Visit this URL in your browser (it should say “hello world”):
+<a href="http://localhost:3000">http://localhost:3000</a></p>
+<p>By default, PM2 will allow <code>1.6</code> seconds for your app to gracefully exit,
+and you can read more on how to configure your app for zero-downtime here:
+<a href="http://pm2.keymetrics.io/docs/usage/signals-clean-restart/">http://pm2.keymetrics.io/docs/usage/signals-clean-restart/</a></p>
+</blockquote>
+<h2 id="3-set-up-ssh-for-semaphoreci">3. Set up SSH for SemaphoreCI</h2>
+<p>First, go to <a href="https://semaphoreci.com">https://semaphoreci.com</a> and sign up for an account.</p>
+<p>Once you’ve logged in, create a project and connect with your GitHub account.</p>
+<p><img src="https://i.imgur.com/cbU1so0.png" alt="SemaphoreCI Loading"></p>
+<p>Make sure that your “Node version” shown under your SemaphoreCI project’s
+build settings matches the output from your droplet when you run <code>node -v</code>.</p>
+<blockquote>
+<p>For example, in this screenshot I have selected the <code>v5.8.0</code> that I’m using.</p>
+</blockquote>
+<p><img src="https://i.imgur.com/KebeWJL.png" alt="SemaphoreCI Node Version"></p>
+<p>Now we need to add a user to the droplet to let SemaphoreCI deploy the app
+after all tests have successfully passed.</p>
+<blockquote>
+<p>Keep your SemaphoreCI browser tab open, because we will come back to that
+in just a bit!</p>
+</blockquote>
+<p>Copy to your clipboard the contents of your local <code>~/.ssh/id_rsa.pub</code> file.
+If you have not yet already created this file, see <a href="https://help.github.com/articles/generating-an-ssh-key/">GitHub’s instructions</a>.</p>
+<p>I’m using <code>pbcopy</code> (while on Mac OS X) to make it easy and do it the CLI way:</p>
+<pre><code class="lang-bash">cat ~/.ssh/id_rsa.pub | pbcopy
+</code></pre>
+<p>Now SSH back into your droplet if you’re not still connected:</p>
+<pre><code class="lang-bash">ssh root@droplet-ip-address
+</code></pre>
+<p>Add the user <code>semaphoreci</code> on the droplet, so you can then SSH in as them.
+When you are prompted for a password, write it down or make it memorable.</p>
+<pre><code class="lang-bash">sudo adduser semaphoreci
+</code></pre>
+<p>Switch user to <code>semaphoreci</code> and paste your clipboard contents into the file
+called <code>~/.ssh/authorized_keys</code>.  This will let you test deployments from
+your local computer as the <code>semaphoreci</code> user later on.  In other words, you
+can SSH into your droplet as the <code>semaphoreci</code> user easily.  It’ll make sense
+later, don’t worry.</p>
+<pre><code class="lang-bash">su semaphoreci
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+vim ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+</code></pre>
+<p>We need to create an SSH key for the actual <code>semaphoreci</code> user, so we can then
+share the contents of the private key we create on the SemaphoreCI dashboard.</p>
+<p>Change directories to your local box’s SSH folder and create a key:</p>
+<pre><code class="lang-bash"><span class="built_in">cd</span> ~/.ssh
+ssh-keygen -t rsa -b 4096
+</code></pre>
+<p>When you’re prompted to enter a file to save the key, enter the following:</p>
+<p><code>semaphoreci_id_rsa</code></p>
+<p>Don’t enter a password for simplicity.</p>
+<p>Again, copy the contents of this SSH key now to your clipboard using <code>pbcopy</code>:</p>
+<pre><code class="lang-bash">cat ~/.ssh/semaphoreci_id_rsa.pub | pbcopy
+</code></pre>
+<p>Now SSH back into your droplet, switch to the <code>semaphoreci</code> user (see above),
+and add this as a new authorized key to that same file you created earlier
+(and added your own SSH key into).  You should add it as the next line in the
+file on your droplet at <code>/home/semaphoreci/.ssh/authorized_keys</code>.
+This will allow SemaphoreCI access to your droplet later on:</p>
+<pre><code class="lang-bash">ssh root@droplet-ip-address
+su semaphoreci
+vim ~/.ssh/authorized_keys
+</code></pre>
+<p>Now go back to that browser tab you have open for SemaphoreCI, and click
+on the link for “Set Up Deployment”.  This link is found on the page that
+looks like this:</p>
+<p><img src="https://i.imgur.com/Ho9wJVh.png" alt="Semaphore Settings"></p>
+<p>It will then present you with options to choose from.  Scroll down and select
+the option titled “Generic Deployment”, and then click “Automatic”.  You should
+now be on a screen that looks like this:</p>
+<p><img src="https://i.imgur.com/VJjuAGr.png" alt="Semaphore Deploy Commands"></p>
+<p>Add the following deploy commands where it says “Enter your deploy commands”:</p>
+<blockquote>
+<p>Make sure you replace <code>droplet-ip-address</code> with the IP address of your
+Digital Ocean droplet.  Also, if you changed to a non-standard SSH port, change
+where it says <code>22</code> in <code>-p 22</code> below.</p>
+</blockquote>
+<pre><code class="lang-bash"><span class="comment"># install pm2 so we can run the deploy command</span>
+npm i -g pm2
+
+<span class="comment"># add this server as a known host, since we can't enter y/n when prompted</span>
+ssh-keyscan -p 22 -H droplet-ip-address &gt;&gt; ~/.ssh/known_hosts
+
+<span class="comment"># run the deployment command</span>
+pm2 deploy ecosystem.json production
+</code></pre>
+<p>After you enter this command, it will now prompt you to paste in the value
+of the private key file for the <code>semaphoreci</code> user.  You don’t have this on
+your clipboard yet, so you need to use <code>pbcopy</code> again locally:</p>
+<pre><code class="lang-bash">cat ~/.ssh/semaphoreci_id_rsa | pbcopy
+</code></pre>
+<p>Paste the contents of your clipboard in the box shown in this screenshot:</p>
+<p><img src="https://i.imgur.com/syZORDH.png" alt="Semaphore Private Key"></p>
+<p>If you want to easily simulate SemaphoreCI logging in as the <code>semaphoreci</code> user
+then you can do this by the running following from your local box:</p>
+<pre><code class="lang-bash">ssh -i ~/.ssh/semaphoreci_id_rsa semaphoreci@droplet-ip-address
+</code></pre>
+<p>You can also do this command much easier by creating a file on your
+local box called <code>~/.ssh/config</code> with these contents (replace your droplet IP):</p>
+<pre><code class="lang-bash">Host semaphoreci-droplet
+  Hostname droplet-ip-address
+  User semaphoreci
+  ForwardAgent yes
+  Port 22
+  IdentityFile ~/.ssh/semaphoreci_id_rsa
+</code></pre>
+<p>Then you can just run <code>ssh semaphoreci-droplet</code> and save a bit of typing.
+Note that I left the line <code>Port 22</code> in there in case you change your SSH port.
+The line that says <code>ForwardAgent yes</code> means it <a href="https://developer.github.com/guides/using-ssh-agent-forwarding/">forwards your SSH agent</a>.</p>
+<p>I’d highly recommend you test this out right now to make sure it’s set up OK.</p>
+<h2 id="4-add-new-github-deployment-key">4. Add new GitHub Deployment Key</h2>
+<p>Since we have a <code>semaphoreci</code> on our droplet, we now need to add a deployment
+key on GitHub for our project, so that we can test deployment locally.</p>
+<p>SemaphoreCI already has added a deployment key for your project (if you set
+it up correctly), so don’t be alarmed if there’s already a key created when
+you get to the GitHub Deployment Key settings page for your repo.  You’ll be
+creating another one for local testing purposes, don’t worry!</p>
+<p>First SSH into your repository as the <code>semaphoreci</code> user:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet
+</code></pre>
+<p>Now create an SSH key pair:</p>
+<pre><code class="lang-bash"><span class="built_in">cd</span> ~/.ssh
+ssh-keygen -t rsa -b 4096
+</code></pre>
+<p>When it asks you where to save the file, use the default and hit <code>ENTER</code>.</p>
+<p>Don’t enter a password for simplicity, again.</p>
+<p>Go to <a href="https://github.com">https://github.com</a> and click on your project, then go to its Settings.</p>
+<p>Under “Deploy keys” add a new deployment key, allow it write access, and
+paste the <code>id_rsa.pub</code> public key file’s content we just created.  To easily
+get the contents of this public key on your clipboard, from your local box
+run this command:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet <span class="string">"cat ~/.ssh/id_rsa.pub"</span> | pbcopy
+</code></pre>
+<p>Here’s the screen showing where you enter your key.  Don’t be alarmed if you
+already see a Deploy here in here; it’s supposed to be there, as it was added
+automatically by SemaphoreCI in a previous step (yes, you’re adding another!):</p>
+<p><img src="https://i.imgur.com/FwelaCI.png" alt="GitHub Deployment Key"></p>
+<p>If you get stuck on this step or need more instructions, see this article:</p>
+<p><a href="https://developer.github.com/guides/managing-deploy-keys/#deploy-keys">https://developer.github.com/guides/managing-deploy-keys/#deploy-keys</a></p>
+<h2 id="5-share-var-www-access">5. Share /var/www Access</h2>
+<p>We created the user <code>semaphoreci</code> in the previous section, and now we need
+to give it recursive read and write access to the <code>/var/www</code> folder on the
+server &ndash; so that the <code>pm2</code> command can deploy to the server (from both
+our local box if we want to deploy manually, and also from SemaphoreCI’s
+environment for the automated continuous integration deployments).</p>
+<p>We need to SSH into the droplet as the root user, so we can then add this
+folder and then give permissions on it to the <code>semaphoreci</code> user.</p>
+<pre><code class="lang-bash">ssh root@droplet-ip-address
+</code></pre>
+<p>Now create the folder using <code>sudo</code>:</p>
+<pre><code class="lang-bash">sudo mkdir /var/www
+</code></pre>
+<blockquote>
+<p>To stay in compliance with standards used widely by infrastructure teams,
+we’ll use the classic <code>www-data</code> group to manage permissions on this folder.</p>
+</blockquote>
+<p>Add the <code>semaphoreci</code> user to this group:</p>
+<pre><code class="lang-bash">sudo adduser semaphoreci www-data
+</code></pre>
+<p>Change ownership of the folder and its files recursively:</p>
+<pre><code class="lang-bash">sudo chown -R www-data:www-data /var/www
+</code></pre>
+<p>Grant the group read and write permissions (say that phrase five times fast!):</p>
+<pre><code class="lang-bash">sudo chmod -R g+wr /var/www
+</code></pre>
+<p>That’s all.</p>
+<p>If you wanted to test it out, then SSH in as the <code>semaphoreci</code>
+user, and try to run the command <code>touch /var/www/test.txt</code>.  It should let
+you create a blank text file in that folder as the <code>semaphoreci</code> user.  If you
+did not do this properly, then you will encounter the following read/write
+error later on:</p>
+<pre><code class="lang-bash">pm2 deploy ecosystem.json production setup
+--&gt; Deploying to production environment
+--&gt; on host droplet-ip-address
+mkdir: cannot create directory ‘/var/www’: Permission denied
+mkdir: cannot create directory ‘/var/www’: Permission denied
+mkdir: cannot create directory ‘/var/www’: Permission denied
+</code></pre>
+<h2 id="6-configure-pm2-for-deployment">6. Configure PM2 for Deployment</h2>
+<p>We’re going to set up a configuration file to be read by PM2.</p>
+<p>On your local box, make sure you have <code>pm2</code> installed globally:</p>
+<pre><code class="lang-bash">npm i -g pm2
+</code></pre>
+<p>Create a new file in the root of your GitHub project called <code>ecosystem.json</code>.</p>
+<pre><code class="lang-bash">vim ecosystem.json
+</code></pre>
+<p>Note that you can automatically create this file (with defaults) from
+PM2’s CLI using <code>pm2 ecosystem</code>, however for the purpose of this article
+I’m providing you with the content here.  You need to replace the following:</p>
+<ul>
+<li><code>droplet-ip-address</code> with your droplet’s IP</li>
+<li><code>repo</code> property value with the path to your GitHub repo</li>
+</ul>
+<pre><code class="lang-json">{
+  <span class="attr">"apps"</span>: [
+    {
+      <span class="attr">"name"</span>: <span class="string">"App"</span>,
+      <span class="attr">"script"</span>: <span class="string">"app.js"</span>,
+      <span class="attr">"exec_mode"</span>: <span class="string">"cluster"</span>,
+      <span class="attr">"instances"</span>: <span class="string">"max"</span>,
+      <span class="attr">"env_production"</span>: {
+        <span class="attr">"NODE_ENV"</span>: <span class="string">"production"</span>
+      }
+    }
+  ],
+  <span class="attr">"deploy"</span>: {
+    <span class="attr">"production"</span>: {
+      <span class="attr">"user"</span>: <span class="string">"semaphoreci"</span>,
+      <span class="attr">"host"</span>: <span class="string">"droplet-ip-address"</span>,
+      <span class="attr">"ref"</span>: <span class="string">"origin/master"</span>,
+      <span class="attr">"repo"</span>: <span class="string">"git@github.com:username/reponame.git"</span>,
+      <span class="attr">"path"</span>: <span class="string">"/var/www/production"</span>,
+      <span class="attr">"post-deploy"</span>: <span class="string">"npm i &amp;&amp; pm2 startOrGracefulReload ecosystem.json --env production"</span>,
+      <span class="attr">"forward-agent"</span>: <span class="string">"yes"</span>
+    }
+  }
+}
+</code></pre>
+<blockquote>
+<p>If you need a reference for the options here, see the official docs here:
+<a href="http://pm2.keymetrics.io/docs/usage/deployment/">http://pm2.keymetrics.io/docs/usage/deployment/</a></p>
+<p>Note, if you have a custom port, you’ll need to add that as a <code>&quot;port&quot;</code>
+property in your <code>ecosystem.json</code>‘s <code>deploy</code> nested object for each env.</p>
+</blockquote>
+<p>Now run setup for deployment with PM2 using the CLI command, and make sure
+you run this command from the root of your project’s folder locally:</p>
+<pre><code class="lang-bash">pm2 deploy ecosystem.json production setup
+</code></pre>
+<blockquote>
+<p>You could (for fun) try running this command twice.  If it worked the first
+time, you will get an error on the second try; it will say the folder exists
+already at the path <code>/var/www/production</code>!</p>
+</blockquote>
+<p>Go ahead and deploy the production environment and start its processes:</p>
+<pre><code class="lang-bash">pm2 deploy ecosystem.json production
+</code></pre>
+<blockquote>
+<p>You can test it out at the following link (replace with your IP):
+<a href="http://your-droplet-ip:3000">http://your-droplet-ip:3000</a></p>
+</blockquote>
+<p>If all is OK, then make sure that PM2 is scheduled to
+<a href="http://pm2.keymetrics.io/docs/usage/startup/">startup automatically</a> if your server reboots or something happens.</p>
+<p>Make sure you run this command as the <code>semaphoreci</code> user on the droplet:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet
+pm2 startup ubuntu
+</code></pre>
+<p>It will give you output which you will then need to run as a user with root
+access, which you can get by running:</p>
+<pre><code class="lang-bash">ssh root@droplet-ip-address
+sudo su -c <span class="string">"env PATH=<span class="variable">$PATH</span>:/usr/local/bin pm2 startup ubuntu -u semaphoreci --hp /home/semaphoreci"</span>
+</code></pre>
+<p>Now save the current processes to automatically restore them if your
+server reboots or something happens.  To do this, first make sure we have PM2
+processes running that we’ll be able to save:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet
+pm2 status
+</code></pre>
+<blockquote>
+<p>If no processes appear, go back to the section with PM2 deployment commands,</p>
+</blockquote>
+<p>If your processes appear, then run this command as the <code>semaphoreci</code> user
+on the droplet, so that these processes will get restored if something happens:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet
+pm2 save
+</code></pre>
+<p>All done!  Now try to commit some code and watch SemaphoreCI deploy it for you.</p>
+<p>For example, you could make it say “thanks nifty” instead of “hello world”:</p>
+<pre><code class="lang-bash">vim app.js
+</code></pre>
+<pre><code class="lang-diff">app.get('/', function(req, res) {
+<span class="deletion">-  res.send('hello world')</span>
+<span class="addition">+  res.send('thanks nifty')</span>
+});
+</code></pre>
+<pre><code class="lang-bash">git add .
+git commit -m <span class="string">'testing out semaphoreci automatically deploy my project'</span>
+git push origin master
+</code></pre>
+<blockquote>
+<p>Now just wait and watch the SemaphoreCI dashboard.  It will run a build,
+then it will deploy it to your Digital Ocean droplet for you using PM2.</p>
+</blockquote>
+<p>If you want to see the <code>pm2 save</code> do its magic, then just run <code>sudo reboot</code>,
+or reboot your droplet from Digital Ocean’s interface.  When it powers back on,
+SSH into it as <code>semaphoreci</code>, and run <code>pm2 status</code> to see your app is running.</p>
+<h2 id="7-pm2-deployment-commands">7. PM2 Deployment Commands</h2>
+<p>This documentation is sourced directly from <a href="https://keymetrics.io/2014/06/25/ecosystem-json-deploy-and-iterate-faster/">Keymetrics Blog</a> and
+also from the <a href="http://pm2.keymetrics.io/docs/usage/deployment/">official PM2 deploy documentation</a>.</p>
+<pre><code class="lang-bash"><span class="comment"># update the code for production</span>
+pm2 deploy production update
+
+<span class="comment"># revert to [n] th commit for production</span>
+pm2 deploy production revert 1
+
+<span class="comment"># execute a command on the production server</span>
+pm2 deploy production <span class="built_in">exec</span> <span class="string">"pm2 restart all"</span>
+</code></pre>
+<p>This <code>deploy</code> command option is inspired from TJ’s <code>deploy</code> shell script at:</p>
+<p><a href="https://github.com/visionmedia/deploy">https://github.com/visionmedia/deploy</a></p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>If you found this article useful, or if you want to ask a question, or need
+my help with something, please reach out by emailing <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#110;&#105;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#116;&#x75;&#99;&#101;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#110;&#105;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#116;&#x75;&#99;&#101;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>
+or on Twitter <a href="https://twitter.com/niftylettuce">@niftylettuce</a>.</li>
+<li>Make sure you add a SemaphoreCI badge to your Readme, and write (some) tests!</li>
+<li>If you want to run your app on port <code>80</code> or <code>443</code> (restricted ports), then
+you can easily do this using <code>authbind</code>.  Read <a href="http://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/#allow-pm2-to-bind-applications-on-ports-80-443-without-root">PM2’s docs</a> on this.
+You may also need to modify your <code>ecosystem.json</code> file to use authbind too.
+For example, my <code>post-deploy</code> line, looks something like this:<pre><code class="lang-js">{
+  <span class="string">"post-deploy"</span>: <span class="string">"npm i &amp;&amp; npm test &amp;&amp; authbind --deep pm2 startOrGracefulReload ecosystem.json --env production"</span>
+}
+</code></pre>
+</li>
+<li>If you want to run a redirection from <code>http</code> to <code>https</code> on your server, then
+you could use <a href="https://github.com/nodejitsu/node-http-proxy">node-http-proxy</a>, or <code>nginx</code>‘s reverse proxy.</li>
+<li>I created this doc using <a href="https://github.com/suan/vim-instant-markdown">vim-instant-markdown</a>, and I
+would have used my own project <a href="https://github.com/niftylettuce/seuss.md">Seuss.md</a>, but it wasn’t ready yet when
+I started to write.</li>
+<li>There might be typos or instructions I’m missing, if so send a pull request.</li>
+</ul>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

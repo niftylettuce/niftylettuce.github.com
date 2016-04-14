@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
+    <meta name="description" content="Flash your B570's bios to allow complete WWLAN whitelisting.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Lenovo B570 Flash Bios for WWLAN Whitelisting">
+    <meta property="og:description" content="Flash your B570's bios to allow complete WWLAN whitelisting.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Lenovo B570 Flash Bios for WWLAN Whitelisting</h1>
+      <hr>
+      <p>September 2013</p>
+      <p><p><strong>NOTE</strong>: I’m not responsible for damages of your system and not responsible for any consequence as a result of BIOS updates and/or following these instructions.  These instructions were mainly documented for my own practice.</p>
+<ol>
+<li><p>Download BIOS mod: <a href="http://www.bios-mods.com/forum/Thread-Removed-44CN43WW-Lenovo-B570-1068A8U-Whitelist-Mod-Request?page=2&amp;highlight=44CN43WW">http://www.bios-mods.com/forum/Thread-Removed-44CN43WW-Lenovo-B570-1068A8U-Whitelist-Mod-Request?page=2&amp;highlight=44CN43WW</a>.</p>
+<blockquote>
+<p>Here is a direct link as of 09/07/2013: <a href="http://dl.dropbox.com/u/45117524/bios-mods.com/44CN43WW_NWL_DOS_ByCamiloml.exe">http://dl.dropbox.com/u/45117524/bios-mods.com/44CN43WW_NWL_DOS_ByCamiloml.exe</a></p>
+</blockquote>
+</li>
+<li><p>Extract the “.exe” file previously downloaded.  Insert a USB flash drive and copy the extracted contents to the root of the flash drive.</p>
+</li>
+<li><p>Download Ultimate Boot CD ISO: <a href="http://www.ultimatebootcd.com/">http://www.ultimatebootcd.com/</a></p>
+</li>
+<li><p>Burn the ISO to a CD-ROM using Brasero: <a href="https://projects.gnome.org/brasero/">https://projects.gnome.org/brasero/</a></p>
+<blockquote>
+<p>You can also install Brasero with:</p>
+</blockquote>
+<pre><code class="lang-bash"> sudo apt-get install brasero
+</code></pre>
+</li>
+<li><p>Ensure your AC power cord, burned CD-ROM, and USB flash drive are inserted into your computer.</p>
+</li>
+<li><p>Reboot your computer and hit F12 at the boot screen.  Select CD-ROM as your boot device.</p>
+</li>
+<li><p>Once UBCD starts, select “FreeDOS” option, and then “1”.  Once you get to the menu, select “Exit” and hit enter.</p>
+</li>
+<li><p>At the command prompt enter the following commands:</p>
+<pre><code class="lang-bash"> CDD C:
+ SCT.bat
+</code></pre>
+</li>
+<li><p>Your computer will flash its BIOS now and after it finishes you can insert any WLAN card to the mini PCI-E slot (replacing the existing BCM4313 card).</p>
+<blockquote>
+<p>I found that AR5B22 cards work great and you can buy them off eBay for ~$6 USD.</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="notes-">Notes:</h3>
+<p>Thanks to Camilo M.L. (<a href="https://twitter.com/RastaMan_Sp">@RastaMan_SP</a>) for the BIOS mod request.</p>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

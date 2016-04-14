@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - 60 Second User Retention with Node.js and MongoDB</title>
+    <meta name="description" content="Quickly send out an email to your users with Node.js and MongoDB.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - 60 Second User Retention with Node.js and MongoDB">
+    <meta property="og:description" content="Quickly send out an email to your users with Node.js and MongoDB.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>60 Second User Retention with Node.js and MongoDB</h1>
+      <hr>
+      <p>June 2013</p>
+      <p><p>This is a quick example of exporting a collection with MongoDB and then sending user emails with Node.js.</p>
+<ol>
+<li><p>Export a JSON collection of all users:</p>
+<blockquote>
+<p>You can filter out specific fields with the <code>-f</code> option if needed (which is useful for variable-based email).</p>
+<p>Be sure to values for <code>--port</code>, <code>--host</code>, <code>--db</code>, <code>-c</code> (collection), <code>-u</code>, and <code>-p</code>.</p>
+</blockquote>
+<pre><code class="lang-bash"> mongoexport --port 1337 --host something.mongohq.com --db your-db-name -c users -u <span class="string">'YOUR-USERNAME'</span> -p <span class="string">'YOUR-PASSWORD'</span> <span class="_">-f</span> email --jsonArray &gt; users.json
+</code></pre>
+</li>
+<li><p>Parse the JSON:</p>
+<blockquote>
+<p>The following JS snippet requires you install the NPM module for <a href="http://postmarkapp.com">Postmark</a>, but you can use an alternative such as <a href="http://niftylettuce.com/node-email-templates/">email-templates</a>.</p>
+</blockquote>
+<pre><code class="lang-bash"> npm install postmark
+</code></pre>
+<pre><code class="lang-bash"> vim parse.js
+</code></pre>
+<pre><code class="lang-js"> <span class="keyword">var</span> postmark = <span class="built_in">require</span>(<span class="string">'postmark'</span>)(<span class="string">'YOUR-API-KEY'</span>)
+ <span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
+ <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)
+ <span class="keyword">var</span> file = path.join(__dirname, <span class="string">'users.json'</span>)
+
+ <span class="comment">///*</span>
+ <span class="keyword">var</span> records = fs.readFileSync(file)
+ records = <span class="built_in">JSON</span>.parse(records)
+ <span class="comment">//*/</span>
+
+ <span class="comment">// you can comment the above and uncomment below to send a test email</span>
+ <span class="comment">//var records = [{ email: 'niftylettuce@gmail.com' }]</span>
+
+ <span class="keyword">var</span> text = <span class="string">"We noticed you signed up, but haven't yet integrated with our API at https://getprove.com/docs."</span>
+ text += <span class="string">"\n\n"</span>
+ text += <span class="string">"Did you need help or run into API issues?"</span>
+ text += <span class="string">"\n\n"</span>
+ text += <span class="string">"P.S. We'll give you 100 free additional credits if you get in touch."</span>
+
+ <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;records.length; i++) {
+   <span class="keyword">var</span> record = records[i]
+   postmark.send({
+     From: <span class="string">'support@getprove.com'</span>,
+     To: record.email,
+     Tag: <span class="string">'user-retention'</span>,
+     Subject: <span class="string">'Prove - Integrate today and earn 100 free additional credits'</span>,
+     TextBody: text
+   }, callback)
+ }
+
+ <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">err, success</span>) </span>{
+   <span class="built_in">console</span>.log(<span class="string">'err'</span>, err, <span class="string">'success'</span>, success)
+ }
+</code></pre>
+</li>
+<li><p>Send the emails:</p>
+<pre><code class="lang-bash"> node parse
+</code></pre>
+</li>
+</ol>
+<p>This snippet was used with a small project of mine called Prove.</p>
+<p>Proves lets developers integrate phone verification and two-factor auth in minutes.</p>
+<p><a href="https://getprove.com">https://getprove.com</a></p>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

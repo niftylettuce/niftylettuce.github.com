@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Node.js Auth for Email/Google/Facebook on Web/iOS/Android with Eskimo</title>
+    <meta name="description" content="Learn how to authenticate Email, Google, and Facebook on Web, iOS, and Android with Eskimo.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Node.js Auth for Email/Google/Facebook on Web/iOS/Android with Eskimo">
+    <meta property="og:description" content="Learn how to authenticate Email, Google, and Facebook on Web, iOS, and Android with Eskimo.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Node.js Auth for Email/Google/Facebook on Web/iOS/Android with Eskimo</h1>
+      <hr>
+      <p>October 2014</p>
+      <p><p>This is a brief walk-through for crafting a <a href="http://nodejs.org">Node.js</a> powered RESTful API/server using <a href="http://eskimo.io">Eskimo</a> (with <a href="http://passportjs.org/">Passport</a> for authentication strategies).  Eskimo is bundled with support for Email, Google, and Facebook auth strategies &ndash; which makes it rather easy to integrate on Web, iOS, and Android.  A custom Basic Authentication <a href="https://github.com/niftylettuce/eskimo/blob/750b3280684b5133b3dd8db41a200573cddeb8f1/boot/policies.js#L14-L42">policy</a> using <code>basic-auth</code> is used as the auth strategy (the “glue”) for API requests that require authentication (e.g. <a href="https://github.com/niftylettuce/eskimo/blob/750b3280684b5133b3dd8db41a200573cddeb8f1/routes/api.js#L50-L62">users updating their stored profile information</a> from a mobile app).  If you’re curious why Eskimo is used, it’s because of its ease-of-use for <a href="http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate/">building Rapid MVP’s with Node.js</a> &ndash; and most importantly it now has out-of-the-box support for this <em>entire</em> walk-through.</p>
+<h2 id="background">Background</h2>
+<p>Let’s start by thinking of common questions related to this topic:</p>
+<blockquote>
+<p>How do I authenticate Facebook and/or Google with my RESTful API and iOS app?  Similarly, how do I do this for Android and Web? &mdash; and is there a simple way to normalize future API requests (that require auth) regardless of authentication strategy?</p>
+<p>How do I handle future requests with my iOS or Android app that require authentication?  For example, if my app shows a list-view of items, and the API endpoint to get those items requires authentication, how do I send my request to the endpoint?  Do I use the <code>access_token</code> from Facebook or a JWT with Google?  Do I use Basic Authentication somehow?</p>
+<p>How do I verify a <a href="https://developers.google.com/accounts/docs/OAuth2Login#validatinganidtoken">Google ID token</a>?  Similarly, how can I verify a <a href="https://developers.facebook.com/docs/facebook-login/access-tokens">Facebook access token</a>?  Also, how can I be sure that these tokens are generated for my app and not someone elses?</p>
+<p>How can I use <a href="http://passportjs.org/">Passport</a> in my RESTful API and have it support both Web, iOS, and Android apps (with Email, Facebook, and Google authentication strategies)?</p>
+</blockquote>
+<p>What are existing discussion threads related to these questions?</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/18554890/ios-facebook-authentication-using-node-js-passport-facebook-token">IOS Facebook Authentication Using node.js passport-facebook-token</a></li>
+<li><a href="https://stackoverflow.com/questions/24874937/passport-facebook-token-authentication-caching-possible">Passport Facebook Token Authentication Caching Possible?</a></li>
+<li><a href="https://stackoverflow.com/questions/11894506/ios-node-js-how-to-verify-passed-access-token">iOS &amp; node.js: how to verify passed access token?</a></li>
+<li><a href="https://programmers.stackexchange.com/questions/154108/ios-and-server-oauth-strategy">iOS and Server: OAuth strategy</a></li>
+<li><a href="https://stackoverflow.com/questions/14528451/oauth2-with-nodejs">Oauth2 with nodejs</a></li>
+<li><a href="https://stackoverflow.com/questions/16312784/what-is-the-proper-way-to-validate-google-granted-oauth-tokens-in-a-node-js-serv">What is the proper way to validate google granted OAuth tokens in a node.js server?</a></li>
+<li><a href="https://stackoverflow.com/questions/359472/how-can-i-verify-a-google-authentication-api-access-token">How can I verify a Google authentication API access token?</a></li>
+</ul>
+<h2 id="visualize-authentication-flow">Visualize Authentication Flow</h2>
+<p><strong>How do you design the authentication flow for Web, Android, and iOS using Node.js?</strong></p>
+<p>Here’s a simple mockup (created with <a href="http://bohemiancoding.com/sketch/">Sketch</a>) and its accompanied (and numbered) description &ndash; this demonstrates the flow of authentication with Eskimo:</p>
+<ol>
+<li><p>Integrate the Facebook and Google SDK’s into your Android or iOS mobile apps.  Add a “sign in” button and upon clicking it, it will initiate a sign in attempt with the SDK and return an <code>access_token</code> &ndash; or &ndash; simply have a user fill out a form with their email and password.</p>
+<p><img src="/posts/nodejs-auth-google-facebook-ios-android-eskimo/nodejs-ios-android-api-authentication.png" alt="Node.js iOS Android API Authentication Flow"></p>
+</li>
+<li><p>Send a <code>POST</code> request to the Node.js app API endpoint of <code>/api/auth/facebook</code> or <code>/api/auth/google</code> (depending on which SDK you’re using).  In the request body, you should include <code>access_token</code> (and optionally <code>refresh_token</code> too).  The API will respond with a <code>user</code> object, of which you’ll want to cache in the mobile app the value of <code>user.api_token</code>.  For example, here’s how it’d look using <code>curl</code>:</p>
+<p>Mobile App Request:</p>
+<pre><code class="lang-bash">curl -X POST <span class="_">-d</span> <span class="string">"access_token=123456789"</span> \
+   <span class="string">"http://localhost:3000/api/auth/facebook"</span>
+</code></pre>
+<p>Node.js App Response:</p>
+<pre><code class="lang-js">{
+ <span class="string">"object"</span>: <span class="string">"user"</span>,
+ <span class="string">"api_token"</span>: <span class="string">"VNaHU6UVbrV8BHUmfbXf3p2YKfG0lrTI"</span>
+ <span class="comment">// ...</span>
+}
+</code></pre>
+<p>This API endpoint <code>/api/auth/:type</code> is configured to find or create the user based off the user’s Facebook ID or the user’s Google ID.  This allows us to have the same user sign in from Web, iOS, and Android &ndash; and have it all synced with one user account on our Node.js back-end.</p>
+<p>Eskimo ships with three API auth endpoint types:</p>
+<ul>
+<li><code>/api/auth/email</code></li>
+<li><code>/api/auth/facebook</code></li>
+<li><code>/api/auth/google</code></li>
+</ul>
+<p>It also has support for Web-based authentication with Email, Facebook, and Google &ndash; to see this in action, simply start up Eskimo with <code>node app</code> and visit <a href="http://localhost:3000/login">http://localhost:3000/login</a>.  Note that you’ll have to first configure <code>boot/config.js</code> with the strategy provider settings (see below).</p>
+<p>For example, here’s how it’d look using <code>curl</code> for the <code>email</code> type endpoint:</p>
+<p>Mobile App Request:</p>
+<pre><code class="lang-bash">curl -X POST \
+    <span class="_">-d</span> <span class="string">"email=niftylettuce@gmail.com"</span> \
+    <span class="_">-d</span> <span class="string">"password=123456"</span> \
+    <span class="string">"http://localhost:3000/api/auth/email"</span>
+</code></pre>
+<p>Node.js App Response:</p>
+<pre><code class="lang-js">{
+ <span class="string">"object"</span>: <span class="string">"user"</span>,
+ <span class="string">"api_token"</span>: <span class="string">"VNaHU6UVbrV8BHUmfbXf3p2YKfG0lrTI"</span>
+ <span class="comment">// ...</span>
+}
+</code></pre>
+<p>If you have not yet registered this email address, then you can do so by sending a request to the <code>/api/auth/signup</code> route:</p>
+<p>Mobile App Request:</p>
+<pre><code class="lang-bash">curl -X POST \
+    <span class="_">-d</span> <span class="string">"email=niftylettuce%2Beskimo@gmail.com"</span> \
+    <span class="_">-d</span> <span class="string">"name=Nifty"</span> \
+    <span class="_">-d</span> <span class="string">"surname=Lettuce"</span> \
+    <span class="_">-d</span> <span class="string">"password=123456"</span> \
+    <span class="string">"http://localhost:3000/api/auth/signup"</span>
+</code></pre>
+<p>Node.js App Response:</p>
+<pre><code class="lang-js">{
+ <span class="string">"object"</span>: <span class="string">"user"</span>,
+ <span class="string">"api_token"</span>: <span class="string">"VNaHU6UVbrV8BHUmfbXf3p2YKfG0lrTI"</span>
+ <span class="comment">// ...</span>
+}
+</code></pre>
+<p><img src="/posts/nodejs-auth-google-facebook-ios-android-eskimo/nodejs-ios-android-restful-api-requests.png" alt="Node.js iOS Android RESTful API Requests"></p>
+</li>
+<li><p>In all future requests to endpoints that require authentication (e.g. requests to update my user account), send Basic Authentication headers to the respective endpoint.  The “user” param will be the user’s <code>user.api_token</code> value (from step two above) and the “password” will be empty (since we want to account for instances where a user could change their email &ndash; and also for simplicity). For example, here’s how it’d look using <code>curl</code>:</p>
+<p>Mobile App Request:</p>
+<pre><code class="lang-bash">curl -X PUT \
+    -u <span class="string">"VNaHU6UVbrV8BHUmfbXf3p2YKfG0lrTI:"</span> \
+    <span class="_">-d</span> <span class="string">"name=John"</span> \
+    <span class="string">"http://localhost:3000/api/user"</span>
+</code></pre>
+<p>Node.js App Response:</p>
+<pre><code class="lang-js">{
+ <span class="string">"object"</span>: <span class="string">"user"</span>,
+ <span class="string">"name"</span>: <span class="string">"John"</span>
+ <span class="comment">// ...</span>
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="get-started-with-api-authentication-using-eskimo">Get Started with API Authentication using Eskimo</h2>
+<p>For the purposes of this article having a working example, we’ll be using <a href="http://eskimo.io">Eskimo</a> version <code>0.2.9</code>; as it has support for Facebook, Google, and Email strategies for both Web and API routes (e.g. <code>/auth/google/callback</code> and <code>/api/auth/google</code>) &ndash; however you can view source for Eskimo (namely these <a href="https://github.com/niftylettuce/eskimo/commit/750b3280684b">two</a> <a href="https://github.com/niftylettuce/eskimo/commit/7006780303fe8c06c140f9e7c63bb3e7178c6a48">commits</a> &ndash; and pull what’s necessary into your existing Node.js project).</p>
+<ol>
+<li><p>Install Eskimo:</p>
+<pre><code class="lang-bash"><span class="comment"># be sure to use the -g global flag</span>
+npm install -g eskimo
+
+<span class="comment"># make sure you have version &gt;= 0.2.9</span>
+eskimo --version
+</code></pre>
+</li>
+<li><p>Create a new project:</p>
+<pre><code class="lang-bash">eskimo create my-project
+<span class="built_in">cd</span> my-project
+npm install <span class="_">-d</span>
+gulp postinstall
+</code></pre>
+</li>
+<li><p>Generate and add provider configuration settings:</p>
+<p><strong>Google:</strong> Go to <a href="https://cloud.google.com/console/project">https://cloud.google.com/console/project</a> and create a new project &ndash; then go to “API’s &amp; auth” &rarr; “Credentials” &rarr; “Create new Client ID” and add the following values:</p>
+<ul>
+<li>Application Type: Web Application</li>
+<li>Authorized JavaScript Origins: <code>http://localhost:3000</code></li>
+<li>Authorized Redirect URI’s: <code>http://localhost:3000/auth/google/callback</code></li>
+</ul>
+<p>Then copy/paste the Client ID and Client Secret Keys into the <code>settings.google</code> object of <code>boot/config.js</code>.</p>
+<p>Also be sure to go to “API’S &amp; auth” &rarr; “Consent screen” &ndash; and select an “EMAIL ADDRESS” and enter a “PRODUCT NAME” value (otherwise your Google auth strategies <a href="https://stackoverflow.com/questions/18677244/error-invalid-client-no-application-name">will not work</a>).</p>
+<p><strong>Facebook:</strong> Go to <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> and create a new “Website” application with a “Site URL” of <code>http://localhost:3000</code> (skip quick start wizard) &ndash; then copy/paste the App ID and App Secret Keys from “Settings” page into the <code>settings.facebook</code> object of <code>boot/config.js</code>.  Also go to “Settings” &rarr; “Advanced” and add a “Valid OAuth redirect URIs” value of <code>http://localhost:3000/auth/facebook/callback</code>.</p>
+<blockquote>
+<p><strong>NOTE</strong>: There is a well-known Facebook bug that appends the hash value of “#<em>=</em>“ to the end of your URL upon a successful Facebook callback.  We’ve already implemented <a href="https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-40427410">my patch</a> into <code>assets/public/js/fb-appended-hash-bug-fix.js</code> and it conditionally loads into <code>app/views/layout.jade</code> if <code>settings.facebook.enabled</code> is <code>true</code>.</p>
+</blockquote>
+</li>
+<li><p>Integrate the Google and Facebook SDK’s into your Android and iOS apps (using the flow mentioned in <a href="#visualize-authentication-flow">Visualize Authentication Flow</a>).  For making RESTful API requests from mobile apps to the Node.js app &ndash; you can use <a href="http://afnetworking.com/">AFNetworking</a> or <a href="http://restkit.org/">RestKit</a> for iOS &ndash; and <a href="https://square.github.io/retrofit/">Retrofit</a> for Android. You can simply search on Google for how to integrate the Google and Facebook SDK’s into your mobile apps.</p>
+</li>
+<li><p>If you want welcome emails to get sent upon successful authentications, then you’ll need to configure <code>settings.email</code> in <code>boot/config.js</code> (or <code>boot/local.js</code>) with a <a href="https://github.com/andris9/Nodemailer">nodemailer</a> transport object, for example:</p>
+<pre><code class="lang-js"><span class="comment">// ...</span>
+email: {
+ <span class="comment">// &lt;https://github.com/andris9/Nodemailer&gt;</span>
+ transport: {
+   service: <span class="string">'gmail'</span>,
+   auth: {
+     user: <span class="string">'user@gmail.com'</span>,
+     pass: <span class="string">'abc123'</span>
+   }
+ }
+},
+<span class="comment">// ...</span>
+</code></pre>
+</li>
+<li><p>If you have any questions, then <a href="https://gitter.im/niftylettuce/eskimo">join the Gitter chat room</a>, email me at <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#110;&#x69;&#102;&#x74;&#x79;&#x6c;&#x65;&#116;&#116;&#117;&#x63;&#101;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#110;&#x69;&#102;&#x74;&#x79;&#x6c;&#x65;&#116;&#116;&#117;&#x63;&#101;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>, and/or file an issue on GitHub at <a href="https://github.com/niftylettuce/eskimo/issues/new">https://github.com/niftylettuce/eskimo/issues/new</a>.</p>
+</li>
+<li><p>Good luck!</p>
+</li>
+</ol>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Linux Mint (Ubuntu) Node.js Hacker Setup</title>
+    <meta name="description" content="Development environment setup and how-to for scrappy Linux hackers and bootstrappers.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Linux Mint (Ubuntu) Node.js Hacker Setup">
+    <meta property="og:description" content="Development environment setup and how-to for scrappy Linux hackers and bootstrappers.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Linux Mint (Ubuntu) Node.js Hacker Setup</h1>
+      <hr>
+      <p>September 2013</p>
+      <p><p>This guide is for a <a href="http://nodejs.org">Node.js</a> focused development environment for developers.</p>
+<p>Advice, suggestions, pull requests, and comments can be filed on Github as <a href="https://github.com/niftylettuce/linux-mint-ubuntu-nodejs-hacker-setup/issues">issues</a>.</p>
+<h2 id="hardware">Hardware</h2>
+<p>If you are on a budget (e.g. $400-500), then use the following setup for a fast environment:</p>
+<ul>
+<li>$300-500 <a href="http://goo.gl/kcvL22">Lenovo Laptop</a> (e.g. $200-$300 <a href="http://goo.gl/JXunkL">Lenovo B570</a> with <strong><a href="http://goo.gl/03qh2U">i3-2330M</a></strong> (i3, not Celeron) processor (<a href="http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist/">please BIOS flash first</a> in order to whitelist the Bluetooth/Wireless card below)</li>
+<li>$45-100 <a href="http://goo.gl/gSUWdE">mSATA SSD</a> (replaces standard hard drive in the laptop) or <a href="http://goo.gl/F0uY1H">2.5” Solid State Drive</a> (“SSD”)</li>
+<li>Already included (free) to $8 <a href="http://goo.gl/cquCnO">Atheros AR5B22</a> Bluetooth 4.0 and Wireless-N mini PCI-E card combo (replaces standard card in the Lenovo B570 laptop and is whitelisted via BIOS flash)</li>
+<li>$26 <a href="http://goo.gl/wN5jPz">Kinivo BTH220 Bluetooth Stereo Headphones</a> or <a href="http://goo.gl/1oABII">RF-MAB2</a> (if you can find a good deal)</li>
+<li>$13 <a href="http://goo.gl/2eDi7P">Patriot Memory Supersonic Boost XT USB 3.0 8GB Flash Drive</a></li>
+<li>$70 <a href="http://goo.gl/WPB6uO">Crucial 8GB Laptop Memory Kit (4GBx2)</a></li>
+</ul>
+<h2 id="software">Software</h2>
+<p>The instructions below install a complete tech stack including, but not limited to:</p>
+<ul>
+<li><a href="http://www.linuxmint.com">Linux Mint 15 Cinnamon</a> for the OS (based on Ubuntu 13.04 Raring Ringtail)</li>
+<li><a href="http://jonls.dk/redshift/">Redshift</a> for screen color temperature adjustment</li>
+<li>Microsoft core-fonts (e.g. Arial) to support <a href="http://google.com/chrome">Google Chrome</a> with standard fonts</li>
+<li><a href="http://levien.com/type/myfonts/inconsolata.html">Inconsolata</a> monospaced font (set as default)</li>
+<li><a href="http://www.clementine-player.org/">Clementine</a> music player (listen to <a href="http://spotify.com">Spotify</a> and radio streams from <a href="http://di.fm">DI.FM</a> and <a href="http://sky.fm">Sky.fm</a> easily)</li>
+<li><a href="http://www.vim.org/">vim</a>, <a href="http://www.zsh.org/">zsh</a>, and <a href="https://github.com/robbyrussell/oh-my-zsh/">oh-my-zsh</a> with several <a href="https://github.com/niftylettuce/.vim">plugins</a> and modified Lambda theme (with ACPI <a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/battery/battery.plugin.zsh">battery plugin</a>)</li>
+<li><a href="https://github.com/apenwarr/sshuttle">sshuttle</a> for SSH tunneling (quick and simple VPN alternative) (also check out <a href="https://getprove.com">Prove</a> for easy Two-Factor Authentication (“TFA”) SSH tunneling with sshuttle)</li>
+<li><a href="http://www.jshint.com/">JSHint</a> NPM module for JavaScript code quality (also comes with a default ~/.jshintrc file)</li>
+<li><a href="https://github.com/linrunner/TLP">TLP</a> (and other tools) for laptop power management (improves battery life/power usage)</li>
+<li><a href="https://github.com/visionmedia/git-extras">Git Extras</a> for quick git commands (<a href="https://vimeo.com/45506445">watch screencast</a>) (added by <a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git-extras/git-extras.plugin.zsh">oh-my-zsh git-extras plugin</a>)</li>
+<li><a href="http://tjholowaychuk.com/post/26904939933/git-extras-introduction-screencast">Git aliases</a> for quick git aliases (added by <a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh">oh-my-zsh git plugin</a>)</li>
+<li><a href="http://nodejs.org">Node.JS</a> for server, <a href="http://www.mongodb.org/">MongoDB</a> for database, and <a href="http://redis.io/">Redis</a> for sessions</li>
+<li><a href="https://github.com/opsengine/cpulimit">cpulimit</a> for limiting processes to only consume specific CPU percentages</li>
+<li><a href="http://peterlevi.com/variety/about-variety/">Variety</a> for automatic wallpaper changing</li>
+<li><a href="https://help.ubuntu.com/community/UFW">UFW</a> firewall enabled by default (blocks incoming, allows outgoing)</li>
+<li><a href="https://developers.google.com/speed/public-dns/docs/using">Google Public DNS</a> sets default DNS servers to Google’s</li>
+<li><a href="https://help.ubuntu.com/community/ClamAV">Clam AntiVirus</a> for anti-virus protection and scanning (not scheduled by default)</li>
+<li><a href="https://help.ubuntu.com/community/Irssi">Irssi</a> for Internet Relay Chat (“IRC”) (try joining #linux-mint, #node.js, and #javascript on Freenode) (here are <code>screen</code> <a href="http://www.pixelbeat.org/lkdb/screen.html">shortcuts</a>)</li>
+<li><a href="http://www.cups-pdf.de/">CUPS-PDF</a> printer that allows you to print directly to PDF.</li>
+<li><a href="http://lm-sensors.org/">lm-sensors</a> for Linux hardware monitoring (e.g. run <code>sensors</code> from command line to get temperature readings)</li>
+</ul>
+<h2 id="get-started">Get Started</h2>
+<p>You could also run these instructions inside a <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> instance for evaluation.</p>
+<ol>
+<li><p>Download and install <a href="http://www.linuxmint.com/release.php?id=20">Linux Mint 15 Cinnamon 64-bit</a> (use the torrent and remove from seeding once finished downloading).</p>
+</li>
+<li><p>Log in, load a new terminal process (CTRL+SHIFT+T), and install the environment’s setup:</p>
+<pre><code class="lang-bash"> wget https://raw.github.com/niftylettuce/linux-mint-ubuntu-nodejs-hacker-setup/master/install.sh -O - | sh
+</code></pre>
+</li>
+<li><p>Hit <code>ENTER</code> on prompts when needed (unfortunately add-apt-repository does not support <code>-y</code> flag and environment variable <code>FORCE_ADD_APT_REPOSITORY=force</code> doesn’t work; you have to hit <code>ENTER</code> a few times).</p>
+</li>
+<li><p>Set up <a href="https://help.github.com/articles/set-up-git">Git</a> and <a href="https://help.github.com/articles/generating-ssh-keys">Github</a> configurations.</p>
+</li>
+<li><p>Change default shell to ZSH:</p>
+<pre><code class="lang-bash"> chsh <span class="_">-s</span> `<span class="built_in">which</span> zsh`
+</code></pre>
+</li>
+<li><p>Reboot.</p>
+</li>
+</ol>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>Generate passwords easily with <a href="https://duckduckgo.com/?q=random+password+strong+30">DuckDuckGo’s random password plugin</a></li>
+<li><a href="https://sites.google.com/site/easylinuxtipsproject/ssd">Optimize your Solid State Drive for running Linux</a>.</li>
+<li>Change the latitude/longitude for <code>gtk-redshift</code> in Startup Applications to match yours.</li>
+<li><p>If running a laptop with Intel HD Graphics (e.g. Lenovo B570), then consider adding the following kernel modules to your Grub config:</p>
+<pre><code class="lang-bash">  sudo apt-get install grub-efi-amd64
+  sudo vim /etc/default/grub
+</code></pre>
+<pre><code class="lang-diff">  -GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash&quot;
+  +# Use semaphores for inter-ring sync: `i915.semaphores=1`
+  +# Activate RC6 mode of Intel GPU: `i915.i915_enable=rc6=1`
+  +# Activate PCIe Active State Power Management: `pcie_aspm=force`
+  +# Use panel (LVDS/eDP) downclocking for power savings: `i915.lvds_downclock=1`
+  +# Enable frame buffer compression for power savings `i915.i915_enable_fbc=1`
+  +GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash i915.semaphores=1 i915.i915_enable_rc6=1 pcie_aspm=force i915.lvds_downclock=1 i915.i915_enable_fbc=1&quot;
+</code></pre>
+<pre><code class="lang-bash">  sudo update-grub
+</code></pre>
+<blockquote>
+<p>More info on i915 kernel module is available by using:</p>
+</blockquote>
+<pre><code class="lang-bash">  modinfo i915
+</code></pre>
+<blockquote>
+<p>For example, if you have a Haswell processor, you might want to try adding <code>i915.preliminary_hw_support=1</code>.</p>
+<p>If you mod everything correctly, you can get 4-5+ hours of battery life (lowering your screen brightness helps as well).</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="license">License</h3>
+<p><a href="http://niftylettuce.mit-license.org/">MIT License</a></p>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

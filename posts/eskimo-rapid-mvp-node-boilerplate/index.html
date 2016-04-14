@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
+    <meta name="description" content="Eskimo helps you to rapidly build Node.js powered API's, online stores, and apps in general.">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Eskimo - Node Boilerplate Framework for Rapid MVP's">
+    <meta property="og:description" content="Eskimo helps you to rapidly build Node.js powered API's, online stores, and apps in general.">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Eskimo - Node Boilerplate Framework for Rapid MVP's</h1>
+      <hr>
+      <p>August 2014</p>
+      <p><h1 id="introducing-eskimo">Introducing Eskimo</h1>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_0.jpg?1410375639" alt="Eskimo"></p>
+<blockquote>
+<p>If an <a href="https://en.wikipedia.org/wiki/Eskimo">eskimo</a> builds an <a href="https://en.wikipedia.org/wiki/Igloo">igloo</a>, and an igloo is a structure made up of individual building blocks, then <a href="http://eskimo.io"><code>eskimo</code></a> is a command line interface (“CLI”) used for building an <a href="http://igloojs.com"><code>igloo</code></a>.</p>
+</blockquote>
+<p>Eskimo is a new <a href="http://nodejs.org">Node.js</a> boilerplate for building <strong>Rapid MVP’s</strong> (“RMVP’s”).</p>
+<blockquote>
+<p>Launched at a <a href="https://speakerdeck.com/niftylettuce/eskimo-nodejs-rapid-mvp-boilerplate-framework">NYC Node.js Meetup</a> held at Microsoft on August 27, 2014.</p>
+</blockquote>
+<h2 id="problems">Problems</h2>
+<h3 id="cluttered-community">Cluttered community</h3>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_11.jpg?1410375639" alt="Boilerplates"></p>
+<p>Despite an abundance of boilerplates and frameworks (“project starters”), the Node community lacks an up-to-date, opinionated, simple, modular, and minimal project starter (specifically for building RMVP’s with).  Projects start off small and opinionated by one person, but then they become influenced by contributors and grow to unmaintainable proportions.  Searching on Google and GitHub for “node boilerplates” or “node frameworks” yields hundreds of results.</p>
+<h3 id="sails-locomotive-express-4-x">Sails/Locomotive !== Express 4.x</h3>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_17.jpg?1410375639" alt="Express 3 vs. 4"></p>
+<p>Due to heavy reliance on <a href="https://github.com/senchalabs/connect">connect</a> in <a href="http://expressjs.com">express</a> 3.x, the projects have become outdated and do not abide by the concept of “use individual components” (<a href="https://github.com/balderdashy/sails/issues/1684">sails #1684</a> and <a href="https://github.com/jaredhanson/locomotive/issues/159">locomotive #159</a>).</p>
+<h3 id="lack-of-automation-and-best-practices">Lack of automation and best-practices</h3>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_25.jpg?1410375639" alt="Best Practices"></p>
+<p>Many project starters lack automation for testing and production deployments.  Several ignore front-end best-practices such as having an asset pipeline (uglify/minify/optimize assets) and don’t utilize <a href="http://bower.io/">Bower</a>, <a href="http://getbootstrap.com/">Bootstrap</a>, <a href="http://fontawesome.io/">Font Awesome</a>, <a href="https://aws.amazon.com/">S3/CloudFront</a>, <a href="http://nodejs.org/api/cluster.html">clustering</a>, and <a href="http://lesscss.org/">LESS</a>.</p>
+<h3 id="app-structure-and-code-re-usability">App structure and code re-usability</h3>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_22.jpg?1410375639" alt="Electrolyte"></p>
+<p>Currently no frameworks nor boilerplates have implemented dependency injection using <a href="https://github.com/jaredhanson/electrolyte">electrolyte</a> (other than <a href="http://eskimo.io">eskimo</a>, with exception of <a href="https://github.com/jaredhanson">Jared Hanson’s</a> projects as far as I know.</p>
+<p><a href="http://www.catonmat.net/"><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_10.jpg?1410375639" alt="Catonmat"></a></p>
+<p>Most applications structure their code by passing around global objects to exported functions, or simply have global variables (which is bad practice).  For example, here’s how many some project starters are structured using global objects:</p>
+<pre><code class="lang-js"><span class="comment">// config.js</span>
+
+<span class="built_in">module</span>.exports = {
+  port: process.env === <span class="string">'development'</span> ? <span class="number">3000</span> : <span class="number">80</span>
+};
+</code></pre>
+<pre><code class="lang-js"><span class="comment">// controller.js</span>
+
+<span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>{
+  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>{
+    res.send(<span class="string">'Hello world'</span>);
+  });
+};
+</code></pre>
+<pre><code class="lang-js"><span class="comment">// app.js</span>
+
+<span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);
+<span class="keyword">var</span> app = express();
+<span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>);
+<span class="keyword">var</span> controller = <span class="built_in">require</span>(<span class="string">'./controller'</span>)(config);
+
+app.get(<span class="string">'/'</span>, controller);
+
+app.listen(config.port);
+</code></pre>
+<h2 id="solution">Solution</h2>
+<h3 id="eskimo">Eskimo</h3>
+<h4 id="install">Install</h4>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_29.jpg?1410375639" alt="Install Eskimo"></p>
+<h4 id="usage">Usage</h4>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_30.jpg?1410375639" alt="Usage for Eskimo"></p>
+<h4 id="simple-scaffolding">Simple scaffolding</h4>
+<p>Built with <a href="https://github.com/visionmedia/commander.js/">commander</a> and inspired by <a href="https://github.com/yeoman/yo">yo</a>, the <code>eskimo</code> CLI provides a command <code>create</code> to scaffold a new RMVP and <code>model</code>, <code>view</code>, and <code>controller</code> commands to scaffold a new <a href="http://mongoosejs.com">mongoose</a> schema, <a href="http://jade-lang.com">jade</a> template, and route middleware respectively.</p>
+<h4 id="highly-opinionated">Highly opinionated</h4>
+<p>In order to stay focused, one direction across the front-end and back-end must be taken with a project starter.  Having support in the CLI for all templating languages, all ORM’s for building schemas, SQL, NoSQL, etc. is too much to maintain.  However, support for swapping out anything that is default is required.  One templating language (<a href="http://jade-lang.com">jade</a>), one ORM (<a href="http://mongoosejs.com">mongoose</a>), one database (<a href="http://www.mongodb.org/">mongodb</a>), and one CSS pre-processor (<a href="http://lesscss.org/">less</a>) have been selected as initial candidates based off successful RMVP projects (see the <a href="#showcase">Showcase</a>) below.</p>
+<h4 id="easily-customizable">Easily customizable</h4>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_23.jpg?1410375639" alt="Highly configurable"></p>
+<p>Don’t like using <a href="http://jade-lang.com">jade</a>, <a href="http://lesscss.org/">less</a>, <a href="http://passportjs.org/">passport</a>, &hellip;?  Simply delete them from the generated project starter files and remove them from <code>package.json</code> after running <code>eskimo create [name]</code>.</p>
+<h4 id="documented-micro-examples">Documented micro-examples</h4>
+<p>After you create a new project starter, what’s next?  Need Facebook and/or Google Authentication in your app?  Integration with Stripe for payments?  Documentation and setup for a RESTful API?  Using Sockets.io?  Setup for zero-downtime reloads and automated deployment? Simply look in the <a href="https://github.com/niftylettuce/eskimo/tree/master/examples"><code>/examples</code></a> folder or file an issue if you’d like help.  By simply having micro-examples as Readme files, users are forced to learn by reading and thinking (as opposed to simply copying/paste a complete working example).</p>
+<h2 id="framework-boilerplate-comparison">Framework/boilerplate comparison</h2>
+<h3 id="back-end">Back-end</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th style="text-align:center">☆’s*</th>
+<th style="text-align:center">Express 4</th>
+<th style="text-align:center">DI**</th>
+<th style="text-align:center">Gulp</th>
+<th style="text-align:center">Mocha</th>
+<th style="text-align:center">Travis</th>
+<th style="text-align:center">Cov.</th>
+<th style="text-align:center">LOC***</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://eskimo.io">eskimo</a></td>
+<td style="text-align:center">128</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">2730</td>
+</tr>
+<tr>
+<td><a href="http://sailsjs.org">sails</a></td>
+<td style="text-align:center">7550</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">26741</td>
+</tr>
+<tr>
+<td><a href="http://locomotivejs.org/">locomotive</a></td>
+<td style="text-align:center">685</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">16598</td>
+</tr>
+<tr>
+<td><a href="http://www.totaljs.com/">totaljs</a></td>
+<td style="text-align:center">1061</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">14827</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sahat/hackathon-starter">hackathon-starter</a></td>
+<td style="text-align:center">7300</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">16877</td>
+</tr>
+<tr>
+<td><a href="http://derbyjs.com">derby</a></td>
+<td style="text-align:center">3366</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">2688</td>
+</tr>
+<tr>
+<td><a href="https://github.com/krakenjs/kraken-js">kraken</a></td>
+<td style="text-align:center">2901</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">1762</td>
+</tr>
+</tbody>
+</table>
+<h3 id="front-end">Front-end</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th style="text-align:center">☆’s*</th>
+<th style="text-align:center">Asset Pipeline</th>
+<th style="text-align:center">Bower</th>
+<th style="text-align:center">Bootstrap 3</th>
+<th style="text-align:center">Font Awesome 4</th>
+<th style="text-align:center">Jade</th>
+<th style="text-align:center">LESS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://eskimo.io">eskimo</a></td>
+<td style="text-align:center">128</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+</tr>
+<tr>
+<td><a href="http://sailsjs.org">sails</a></td>
+<td style="text-align:center">7550</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+</tr>
+<tr>
+<td><a href="http://locomotivejs.org/">locomotive</a></td>
+<td style="text-align:center">685</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td><a href="http://www.totaljs.com/">totaljs</a></td>
+<td style="text-align:center">1061</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sahat/hackathon-starter">hackathon-starter</a></td>
+<td style="text-align:center">7300</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">✓</td>
+</tr>
+<tr>
+<td><a href="http://derbyjs.com">derby</a></td>
+<td style="text-align:center">3366</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+<tr>
+<td><a href="https://github.com/krakenjs/kraken-js">kraken</a></td>
+<td style="text-align:center">2901</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+<td style="text-align:center">✗</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>* as of 9/10/2014</li>
+<li>** dependency injection with <a href="https://github.com/jaredhanson/electrolyte">electrolyte</a></li>
+<li>*** number of lines of code on a fresh <code>git clone</code> of the repository (using <code>git-extras</code>‘s <code>git-line-summary</code> command) as of 9/10/2014</li>
+</ul>
+<h2 id="showcase">Showcase</h2>
+<p><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_35.jpg?1410375639" alt="Showcase"></p>
+<p><a href="https://ourharvest.com"><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_36.jpg?1410375639" alt="Our Harvest"></a></p>
+<p><a href="http://developer.marketprophit.com"><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_37.jpg?1410375639" alt="Market Prophit"></a></p>
+<p><a href="http://seedfeed.com"><img src="https://speakerd.s3.amazonaws.com/presentations/c29172701b490132a3400ec9c33cef64/slide_38.jpg?1410375639" alt="Seedfeed"></a></p>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
