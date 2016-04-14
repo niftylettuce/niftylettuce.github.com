@@ -688,7 +688,7 @@ I started to write.
 [amazon-boost]: http://observer.com/2016/02/behind-the-scam-what-does-it-takes-to-be-a-bestselling-author-3-and-5-minutes/
 [pm2]: https://github.com/Unitech/pm2
 [nodejs]: https://nodejs.org/en/
-[digital-ocean]: https://www.digitalocean.com/
+[digital-ocean]: https://m.do.co/c/a7fe489d1b27
 [fw]: https://developer.github.com/guides/using-ssh-agent-forwarding/
 [github]: https://github.com/
 [rpi]: http://amzn.to/1WqX3pZ
