@@ -6,5 +6,8 @@
     "underscore": "1.4.x",
     "wintersmith-less": "^1.0.0"
   },
-  "private": "true"
+  "private": "true",
+  "devDependencies": {
+    "wintersmith": "^2.3.1"
+  }
 }
