@@ -342,6 +342,14 @@ automatically by SemaphoreCI in a previous step (yes, you’re adding another!):
 <p><img src="https://i.imgur.com/FwelaCI.png" alt="GitHub Deployment Key"></p>
 <p>If you get stuck on this step or need more instructions, see this article:</p>
 <p><a href="https://developer.github.com/guides/managing-deploy-keys/#deploy-keys">https://developer.github.com/guides/managing-deploy-keys/#deploy-keys</a></p>
+<p>Finally, you should test that SSH access to GitHub works.  SSH into your
+droplet as the <code>semaphoreci</code> user and run GitHub’s test command:</p>
+<pre><code class="lang-bash">ssh semaphoreci-droplet
+ssh -T git@github.com
+</code></pre>
+<p>It should output something like this if it was successful:</p>
+<pre><code class="lang-bash">Hi USER/REPO! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span>
+</code></pre>
 <h2 id="5-share-var-www-access">5. Share /var/www Access</h2>
 <p>We created the user <code>semaphoreci</code> in the previous section, and now we need
 to give it recursive read and write access to the <code>/var/www</code> folder on the
@@ -505,7 +513,7 @@ pm2 deploy production <span class="built_in">exec</span> <span class="string">"p
 <h2 id="notes">Notes</h2>
 <ul>
 <li>If you found this article useful, or if you want to ask a question, or need
-my help with something, please reach out by emailing <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x6e;&#x69;&#x66;&#x74;&#121;&#108;&#101;&#116;&#x74;&#117;&#x63;&#101;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;">&#x6e;&#x69;&#x66;&#x74;&#121;&#108;&#101;&#116;&#x74;&#117;&#x63;&#101;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;</a>
+my help with something, please reach out by emailing <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#110;&#105;&#x66;&#116;&#121;&#x6c;&#x65;&#116;&#116;&#117;&#99;&#x65;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#110;&#105;&#x66;&#116;&#121;&#x6c;&#x65;&#116;&#116;&#117;&#99;&#x65;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a>
 or on Twitter <a href="https://twitter.com/niftylettuce">@niftylettuce</a>.</li>
 <li>Make sure you add a SemaphoreCI badge to your Readme, and write (some) tests!</li>
 <li>If you want to run your app on port <code>80</code> or <code>443</code> (restricted ports), then

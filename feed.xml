@@ -8,10 +8,10 @@
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>4 Ways to Make Crowdfunding Fulfillment Easy</title>
-      <link>http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</link>
-      <pubDate>Wed, 29 May 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</guid>
+      <title>Android Local Testing</title>
+      <link>http://niftylettuce.com/posts/android-local-testing</link>
+      <pubDate>Sun, 28 Apr 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -24,10 +24,10 @@
       <description></description>
     </item>
     <item>
-      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
-      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
-      <pubDate>Wed, 13 Apr 2016 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
+      <title>4 Ways to Make Crowdfunding Fulfillment Easy</title>
+      <link>http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</link>
+      <pubDate>Wed, 29 May 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -48,14 +48,6 @@
       <description></description>
     </item>
     <item>
-      <title>Android Local Testing</title>
-      <link>http://niftylettuce.com/posts/android-local-testing</link>
-      <pubDate>Sun, 28 Apr 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
       <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
       <pubDate>Tue, 26 Aug 2014 20:00:00 -0400</pubDate>
@@ -72,6 +64,14 @@
       <description></description>
     </item>
     <item>
+      <title>How to run multiple Dropbox instances on Ubuntu/Debian/Linux Mint.</title>
+      <link>http://niftylettuce.com/posts/multiple-dropbox-instances</link>
+      <pubDate>Fri, 06 Sep 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/multiple-dropbox-instances</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
       <title>Micro-Projects for Fun and Profit</title>
       <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
       <pubDate>Tue, 25 Jun 2013 20:00:00 -0400</pubDate>
@@ -80,10 +80,10 @@
       <description></description>
     </item>
     <item>
-      <title>How to run multiple Dropbox instances on Ubuntu/Debian/Linux Mint.</title>
-      <link>http://niftylettuce.com/posts/multiple-dropbox-instances</link>
-      <pubDate>Fri, 06 Sep 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/multiple-dropbox-instances</guid>
+      <title>NetDNA API Docs</title>
+      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
+      <pubDate>Thu, 23 May 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -96,10 +96,10 @@
       <description></description>
     </item>
     <item>
-      <title>NetDNA API Docs</title>
-      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
-      <pubDate>Thu, 23 May 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
+      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
+      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
+      <pubDate>Wed, 13 Apr 2016 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
