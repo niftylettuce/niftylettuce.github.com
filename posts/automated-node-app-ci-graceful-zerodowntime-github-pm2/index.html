@@ -100,18 +100,25 @@ dashboard and you can find more about this on <a href="https://www.digitalocean.
 <p>Make sure you create a droplet using the latest stable Ubuntu release.</p>
 </blockquote>
 <p><img src="https://i.imgur.com/2yroKWo.png" alt="Digital Ocean Droplet"></p>
-<p>SSH into the droplet and install dependencies for your stack with Node.
-In my case, I needed to install Node, MongoDB, and Redis.  Of course, MongoDB
+<p>Now we’ll SSH into the droplet and install dependencies for your stack with Node.</p>
+<blockquote>
+<p>In my case, I needed to install Node, MongoDB, and Redis.  Of course, MongoDB
 and Redis are optional dependencies, but I use them because they allow me to
 build <a href="https://github.com/niftylettuce/rapid-mvp-standards">Rapid MVP’s</a> (quick prototypes in other words).  Also, I really
 like to use <a href="https://github.com/creationix/nvm">NVM</a> to manage various version of Node installed, which
-was created by another prodigy, <a href="https://github.com/creationix">Tim Caswell</a>.</p>
-<blockquote>
+was created by another prodigy, <a href="https://github.com/creationix">Tim Caswell</a>.  We’ll install NVM
+later when we’re doing stuff with SemaphoreCI.</p>
 <p>Make sure you replace all instances in this article of <code>droplet-ip-address</code>
 with the IP address given to you by Digital Ocean for your droplet.</p>
 </blockquote>
 <pre><code class="lang-bash">ssh root@droplet-ip-address
 </code></pre>
+<p>If you only have a $5/mo droplet through Digital Ocean, you will encounter memory
+errors later on.  Therefore I highly recommend to add swap to this droplet right now.
+Or you could upgrade to a $10/mo droplet, which has more memory, and is less likely
+to run out during NPM installations.  If you’d like to add swap to your droplet,
+here are the official instructions from Digital Ocean:</p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04">https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04</a></p>
 <p>Install the basic requirements needed for the server:</p>
 <pre><code class="lang-bash">sudo apt-get update
 sudo apt-get upgrade
@@ -533,7 +540,7 @@ pm2 deploy production <span class="built_in">exec</span> <span class="string">"p
 <h2 id="notes">Notes</h2>
 <ul>
 <li>If you found this article useful, or if you want to ask a question, or need
-my help with something, please reach out by emailing <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x6e;&#105;&#x66;&#116;&#x79;&#108;&#101;&#116;&#116;&#x75;&#x63;&#101;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;">&#x6e;&#105;&#x66;&#116;&#x79;&#108;&#101;&#116;&#116;&#x75;&#x63;&#101;&#x40;&#x67;&#109;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a>
+my help with something, please reach out by emailing <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#110;&#x69;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#x74;&#117;&#x63;&#101;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#110;&#x69;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#x74;&#117;&#x63;&#101;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>
 or on Twitter <a href="https://twitter.com/niftylettuce">@niftylettuce</a>.</li>
 <li>Make sure you add a SemaphoreCI badge to your Readme, and write (some) tests!</li>
 <li>If you want to run your app on port <code>80</code> or <code>443</code> (restricted ports), then

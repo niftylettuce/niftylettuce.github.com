@@ -8,14 +8,6 @@
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>4 Ways to Make Crowdfunding Fulfillment Easy</title>
-      <link>http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</link>
-      <pubDate>Wed, 29 May 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Android Local Testing</title>
       <link>http://niftylettuce.com/posts/android-local-testing</link>
       <pubDate>Sun, 28 Apr 2013 20:00:00 -0400</pubDate>
@@ -32,18 +24,18 @@
       <description></description>
     </item>
     <item>
-      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
-      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
-      <pubDate>Wed, 13 Apr 2016 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
+      <title>4 Ways to Make Crowdfunding Fulfillment Easy</title>
+      <link>http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</link>
+      <pubDate>Wed, 29 May 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
     <item>
-      <title>Does Pinterest own the word &quot;pin&quot;?</title>
-      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
-      <pubDate>Sat, 01 Jun 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
+      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
+      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
+      <pubDate>Wed, 13 Apr 2016 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -56,10 +48,10 @@
       <description></description>
     </item>
     <item>
-      <title>Micro-Projects for Fun and Profit</title>
-      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
-      <pubDate>Tue, 25 Jun 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
+      <title>Does Pinterest own the word &quot;pin&quot;?</title>
+      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
+      <pubDate>Sat, 01 Jun 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -68,6 +60,14 @@
       <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
       <pubDate>Fri, 06 Sep 2013 20:00:00 -0400</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Micro-Projects for Fun and Profit</title>
+      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
+      <pubDate>Tue, 25 Jun 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
