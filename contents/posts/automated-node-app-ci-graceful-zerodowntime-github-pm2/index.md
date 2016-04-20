@@ -89,12 +89,14 @@ dashboard and you can find more about this on [a Digital Ocean article][doa].
 
 ![Digital Ocean Droplet][droplet-image]
 
-SSH into the droplet and install dependencies for your stack with Node.
-In my case, I needed to install Node, MongoDB, and Redis.  Of course, MongoDB
+Now we'll SSH into the droplet and install dependencies for your stack with Node.
+
+> In my case, I needed to install Node, MongoDB, and Redis.  Of course, MongoDB
 and Redis are optional dependencies, but I use them because they allow me to
 build [Rapid MVP's][mvp] (quick prototypes in other words).  Also, I really
 like to use [NVM][nvm] to manage various version of Node installed, which
-was created by another prodigy, [Tim Caswell][tim-caswell].
+was created by another prodigy, [Tim Caswell][tim-caswell].  We'll install NVM
+later when we're doing stuff with SemaphoreCI.
 
 > Make sure you replace all instances in this article of `droplet-ip-address`
 with the IP address given to you by Digital Ocean for your droplet.
@@ -102,6 +104,14 @@ with the IP address given to you by Digital Ocean for your droplet.
 ```bash
 ssh root@droplet-ip-address
 ```
+
+If you only have a $5/mo droplet through Digital Ocean, you will encounter memory
+errors later on.  Therefore I highly recommend to add swap to this droplet right now.
+Or you could upgrade to a $10/mo droplet, which has more memory, and is less likely
+to run out during NPM installations.  If you'd like to add swap to your droplet,
+here are the official instructions from Digital Ocean:
+
+<https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04>
 
 Install the basic requirements needed for the server:
 
