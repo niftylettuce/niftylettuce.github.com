@@ -290,7 +290,36 @@ Install [PM2][pm2], which will handle deployments for us and manage our processe
 npm i -g pm2
 ```
 
-Next, we need to create an SSH key for the actual `semaphoreci` user, so we can
+Since PM2's deployment command runs on a non-interactive SSH connection, we need
+to resolve this by commenting out a few lines from the `semaphoreci` user's
+`~/.bashrc` file.  We're already logged in as this user on our droplet, so we simply
+need to open up this file and comment this out:
+
+```bash
+vim ~/.bashrc
+```
+
+Here are the changes:
+
+```diff
+# If not running interactively, don't do anything
+-case $- in
+-    *i*) ;;
+-      *) return;;
+-esac
++#case $- in
++#    *i*) ;;
++#      *) return;;
++#esac
+```
+
+Reload the file to instantly get our new changes in our shell:
+
+```bash
+source ~/.bashrc
+```
+
+Next we need to create an SSH key for the actual `semaphoreci` user, so we can
 share the contents of the private key we create on the SemaphoreCI dashboard.
 
 Change directories to your local box's SSH folder and create a key:
