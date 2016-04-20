@@ -644,8 +644,9 @@ access, which you can get by running:
 
 ```bash
 ssh root@droplet-ip-address
-sudo su -c "env PATH=$PATH:/usr/local/bin pm2 startup ubuntu -u semaphoreci --hp /home/semaphoreci"
+# paste output and run it here
 ```
+
 
 Now save the current processes to automatically restore them if your
 server reboots or something happens.  To do this, first make sure we have PM2
