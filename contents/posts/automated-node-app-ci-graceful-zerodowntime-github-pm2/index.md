@@ -18,7 +18,7 @@ entirety exists.  It should take you 30 minutes to set up properly.
 * [Preface](#preface)
 * [1. Create your Droplet](#1-create-your-droplet)
 * [2. Write your Node App File](#2-write-your-node-app-file)
-* [3. Set up SSH for SemaphoreCI](#3-set-up-semaphoreci)
+* [3. Set up SSH for SemaphoreCI](#3-set-up-ssh-for-semaphoreci)
 * [4. Add new GitHub Deployment Key](#4-add-new-github-deployment-key)
 * [5. Share /var/www Access](#5-share-varwww-access)
 * [6. Configure PM2 for Deployment](#6-configure-pm2-for-deployment)
@@ -111,20 +111,6 @@ sudo apt-get upgrade
 sudo apt-get install vim build-essential libssl-dev git unattended-upgrades authbind openssl fail2ban
 ```
 
-Install [NVM][nvm] and set it up to use the latest stable version:
-
-```bash
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install stable
-nvm alias default stable
-```
-
-Install [PM2][pm2], which will handle deployments for us and manage our processes:
-
-```
-npm i -g pm2
-```
-
 Install MongoDB, which is optional:
 
 ```bash
@@ -145,9 +131,22 @@ redis-benchmark -q -n 1000 -c 10 -P 5
 source ~/.profile
 ```
 
-You might also want to look into installing `fail2ban`, changing the default
+Later, we will install Node using NVM while logged in as the SemaphoreCI user.
+
+> You might also want to look into installing `fail2ban`, changing the default
 SSH port, and remove password-based login access. You can find how to do this
-from this section in my [security article][sa], or just Google it.
+from this section in my [security article][sa], or just Google it.  Keep in
+mind that if you follow my security article, I remove root user access.
+Therefore before removing root user access in that article, you should make
+sure that the `semaphoreci` user has `sudo` access (just search for "how to
+add user sudo permission" on Google).  Once you do that, then you can simply
+type `sudo -i` to switch to the root user if you SSH in as `semaphoreci`.  Or
+you could create a new user, such as `niftylettuce` as the username.  Then
+you can add your SSH public key located in your local `~/.ssh/id_rsa.pub` file
+as a new line in the `niftylettuce` user's authorized key file located at
+`/home/niftylettuce/.ssh/authorized_keys`.  Very similar steps described here
+are shown in step 3 below.  I suggest you read ahead before you follow this
+security article or other security setup steps.
 
 
 ## 2. Write your Node App File
@@ -273,7 +272,25 @@ vim ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
 
-We need to create an SSH key for the actual `semaphoreci` user, so we can then
+Since we're logged in as the SemaphoreCI user, now is a good time to install
+Node.js for them on your droplet.  To do so, follow these commands:
+
+Install [NVM][nvm] and set it up to use the latest stable version:
+
+```bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+source ~/.bashrc
+nvm install stable
+nvm alias default stable
+```
+
+Install [PM2][pm2], which will handle deployments for us and manage our processes:
+
+```
+npm i -g pm2
+```
+
+Next, we need to create an SSH key for the actual `semaphoreci` user, so we can
 share the contents of the private key we create on the SemaphoreCI dashboard.
 
 Change directories to your local box's SSH folder and create a key:
