@@ -487,7 +487,7 @@ pm2 startup ubuntu
 <p>It will give you output which you will then need to run as a user with root
 access, which you can get by running:</p>
 <pre><code class="lang-bash">ssh root@droplet-ip-address
-sudo su -c <span class="string">"env PATH=<span class="variable">$PATH</span>:/usr/local/bin pm2 startup ubuntu -u semaphoreci --hp /home/semaphoreci"</span>
+<span class="comment"># paste output and run it here</span>
 </code></pre>
 <p>Now save the current processes to automatically restore them if your
 server reboots or something happens.  To do this, first make sure we have PM2
@@ -540,7 +540,7 @@ pm2 deploy production <span class="built_in">exec</span> <span class="string">"p
 <h2 id="notes">Notes</h2>
 <ul>
 <li>If you found this article useful, or if you want to ask a question, or need
-my help with something, please reach out by emailing <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#110;&#x69;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#x74;&#117;&#x63;&#101;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#110;&#x69;&#102;&#x74;&#121;&#x6c;&#x65;&#116;&#x74;&#117;&#x63;&#101;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>
+my help with something, please reach out by emailing <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#110;&#105;&#102;&#x74;&#x79;&#x6c;&#101;&#116;&#116;&#x75;&#99;&#x65;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#110;&#105;&#102;&#x74;&#x79;&#x6c;&#101;&#116;&#116;&#x75;&#99;&#x65;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a>
 or on Twitter <a href="https://twitter.com/niftylettuce">@niftylettuce</a>.</li>
 <li>Make sure you add a SemaphoreCI badge to your Readme, and write (some) tests!</li>
 <li>If you want to run your app on port <code>80</code> or <code>443</code> (restricted ports), then
