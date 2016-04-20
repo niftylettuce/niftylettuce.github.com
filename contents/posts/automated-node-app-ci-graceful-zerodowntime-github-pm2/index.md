@@ -439,6 +439,20 @@ If you get stuck on this step or need more instructions, see this article:
 
 <https://developer.github.com/guides/managing-deploy-keys/#deploy-keys>
 
+Finally, you should test that SSH access to GitHub works.  SSH into your
+droplet as the `semaphoreci` user and run GitHub's test command:
+
+```bash
+ssh semaphoreci-droplet
+ssh -T git@github.com
+```
+
+It should output something like this if it was successful:
+
+```bash
+Hi USER/REPO! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
 
 ## 5. Share /var/www Access
 
