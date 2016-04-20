@@ -16,14 +16,6 @@
       <description></description>
     </item>
     <item>
-      <title>Android Local Testing</title>
-      <link>http://niftylettuce.com/posts/android-local-testing</link>
-      <pubDate>Sun, 28 Apr 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>60 Second User Retention with Node.js and MongoDB</title>
       <link>http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</link>
       <pubDate>Mon, 24 Jun 2013 20:00:00 -0400</pubDate>
@@ -48,18 +40,26 @@
       <description></description>
     </item>
     <item>
-      <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
-      <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
-      <pubDate>Tue, 26 Aug 2014 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
       <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
       <pubDate>Fri, 06 Sep 2013 20:00:00 -0400</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Android Local Testing</title>
+      <link>http://niftylettuce.com/posts/android-local-testing</link>
+      <pubDate>Sun, 28 Apr 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
+      <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
+      <pubDate>Tue, 26 Aug 2014 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -88,18 +88,18 @@
       <description></description>
     </item>
     <item>
-      <title>NetDNA API Docs</title>
-      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
-      <pubDate>Thu, 23 May 2013 20:00:00 -0400</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Node.js Auth for Email/Google/Facebook on Web/iOS/Android with Eskimo</title>
       <link>http://niftylettuce.com/posts/nodejs-auth-google-facebook-ios-android-eskimo</link>
       <pubDate>Thu, 16 Oct 2014 20:00:00 -0400</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/nodejs-auth-google-facebook-ios-android-eskimo</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>NetDNA API Docs</title>
+      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
+      <pubDate>Thu, 23 May 2013 20:00:00 -0400</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
