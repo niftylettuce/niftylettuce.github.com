@@ -39,6 +39,8 @@
 </ul>
 </li>
 <li><a href="#pro-tips">Pro-Tips</a><ul>
+<li><a href="#if-you-get-stuck-search-on-xda">If you get stuck, search on XDA</a></li>
+<li><a href="#how-to-back-up-sms-messages">How to back-up SMS messages</a></li>
 <li><a href="#want-to-go-google-free-on-your-mac">Want to go Google-free on your Mac</a></li>
 <li><a href="#sharing-a-link-from-your-computer-to-your-phone">Sharing a link from your computer to your phone</a></li>
 <li><a href="#opt-out-of-google-location-services-on-your-network-router">Opt-out of Google Location services on your Network Router</a></li>
@@ -63,7 +65,7 @@
 <p>In order to install the operating system, please follow the steps below:</p>
 <ol>
 <li>Install ADB and fastboot by following the instructions at: <a href="https://wiki.lineageos.org/adb_fastboot_guide.html">https://wiki.lineageos.org/adb_fastboot_guide.html</a></li>
-<li>Download the latest version of TWRP recovery at: <a href="https://dl.twrp.me/bacon/">https://dl.twrp.me/bacon/</a></li>
+<li>Download the latest version of TWRP recovery <strong>for your specific device</strong> at: <a href="https://twrp.me/Devices/">https://twrp.me/Devices/</a> (sometimes you may need to actually use an older version, e.g. if you are unable to boot into recovery mode, but first try the latest if possible)</li>
 <li>Download the latest version of LineageOS <strong>for your specific device</strong> at: <a href="https://download.lineageos.org">https://download.lineageos.org</a></li>
 <li>Unlock your phone’s bootloader at: <a href="https://wiki.lineageos.org/devices/bacon/install">https://wiki.lineageos.org/devices/bacon/install</a></li>
 <li><p>Boot into the bootloader with <code>adb</code>:</p>
@@ -81,7 +83,7 @@
 <pre><code class="lang-sh">fastboot flash recovery path/to/twrp.bacon.img
 </code></pre>
 </li>
-<li>Boot into recovery mode (press and hold volume down and power button for a few seconds – may vary depending on what your device is; you can search on <a href="https://duckduckgo.com">DuckDuckGo</a> for your device’s shortcut if necessary)</li>
+<li>If you are still in fastboot menu, use the volume up and down keys to select “Recovery mode” and then hit the power button to select it.  Otherwise you will need to boot into recovery mode by pressing and holding down the volume down and power button for a few seconds  – may vary depending on what your device is; you can search on <a href="https://duckduckgo.com">DuckDuckGo</a> for your device’s shortcut if necessary)</li>
 <li>Make a back-up with TWRP at: <a href="https://www.howtogeek.com/240582/how-to-back-up-and-restore-your-android-phone-with-twrp/">https://www.howtogeek.com/240582/how-to-back-up-and-restore-your-android-phone-with-twrp/</a></li>
 <li><p>Pull the recovery backup ZIP off the phone using <code>adb</code>:</p>
 <blockquote>
@@ -127,8 +129,7 @@
 <li><a href="https://flowcrypt.com/download">FlowCrypt</a> for PGP encryption (not on F-Droid)</li>
 <li><a href="https://f-droid.org/en/packages/org.sufficientlysecure.keychain/">OpenKeychain</a> for encrypting files and communications (OpenPGP compliant and pairs well with K-9 mail)</li>
 <li><a href="https://play.google.com/store/apps/details?id=skimmerscammer.skimmerscammer&amp;hl=en_US">Skimmer Scanner</a> (<a href="https://gitlab.com/fdroid/rfp/issues/353">not yet</a> on F-Droid, but you can download APK using Yalp Store, see below)</li>
-<li><a href="https://f-droid.org/en/packages/org.adaway/">AdAway</a> for blocking ads, uses hosts file</li>
-<li><a href="https://f-droid.org/en/packages/org.blokada.alarm/">Blokada</a> for blocking ads</li>
+<li><a href="https://f-droid.org/en/packages/org.adaway/">AdAway</a> for blocking ads, uses hosts file (requires root, see step 14 above in <a href="#install-requirements">Install Requirements</a>)</li>
 </ul>
 <h3 id="tools-messaging-entertainment">Tools, Messaging, &amp; Entertainment</h3>
 <ul>
@@ -155,6 +156,11 @@
 <li><a href="https://f-droid.org/en/packages/de.blinkt.openvpn/">OpenVPN</a> for virtual private network (“VPN”)</li>
 </ul>
 <h2 id="pro-tips">Pro-Tips</h2>
+<h3 id="if-you-get-stuck-search-on-xda">If you get stuck, search on XDA</h3>
+<p>Do a search on DuckDuckGo for “xda lineageos $deviceName $yourProblem”.  You should generally find a solution.</p>
+<p>For example, you might need to completely re-flash firmware, radio, and bootloader depending on your device.  I had to do this with a Nexus 5X and followed this thread here for my issue <a href="https://forum.xda-developers.com/nexus-5x/orig-development/rom-lineageos-15-1-nexus-5x-bullhead-t3724575">https://forum.xda-developers.com/nexus-5x/orig-development/rom-lineageos-15-1-nexus-5x-bullhead-t3724575</a>.  I found this thread by searching “nexus 5x lineageos xda”.</p>
+<h3 id="how-to-back-up-sms-messages">How to back-up SMS messages</h3>
+<p>Simply install QKSMS (see link above), and in the app first sync with native messages, then go to <code>Backup and restore</code>, click on “Backup now”, and then <code>adb pull /sdcard/QKSMS some-local-path</code> (replace “some-local-path” with where you want to save the back-up locally).  Later once you’re done with all the steps above, you can <code>adb push some-local-path /sdcard/QKSMS-backup</code>, re-open the QKSMS app after installing it, and restore from back-up.</p>
 <h3 id="want-to-go-google-free-on-your-mac">Want to go Google-free on your Mac</h3>
 <p>Send me <a href="mailto:niftylettuce@gmail.com">an email</a> and I’ll ping you back once my article for that is up.</p>
 <h3 id="sharing-a-link-from-your-computer-to-your-phone">Sharing a link from your computer to your phone</h3>
