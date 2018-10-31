@@ -8,14 +8,6 @@
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>Android Local Testing</title>
-      <link>http://niftylettuce.com/posts/android-local-testing</link>
-      <pubDate>Sun, 28 Apr 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>4 Ways to Make Crowdfunding Fulfillment Easy</title>
       <link>http://niftylettuce.com/posts/4-ways-to-make-crowdfunding-fulfillment-easy</link>
       <pubDate>Wed, 29 May 2013 19:00:00 -0500</pubDate>
@@ -32,26 +24,10 @@
       <description></description>
     </item>
     <item>
-      <title>Google-free Android Setup</title>
-      <link>http://niftylettuce.com/posts/google-free-android-setup</link>
-      <pubDate>Mon, 29 Oct 2018 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/google-free-android-setup</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Does Pinterest own the word &quot;pin&quot;?</title>
-      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
-      <pubDate>Sat, 01 Jun 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
-      <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
-      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <title>Android Local Testing</title>
+      <link>http://niftylettuce.com/posts/android-local-testing</link>
+      <pubDate>Sun, 28 Apr 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -64,6 +40,14 @@
       <description></description>
     </item>
     <item>
+      <title>Does Pinterest own the word &quot;pin&quot;?</title>
+      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
+      <pubDate>Sat, 01 Jun 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
       <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
       <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
       <pubDate>Tue, 26 Aug 2014 19:00:00 -0500</pubDate>
@@ -72,10 +56,18 @@
       <description></description>
     </item>
     <item>
-      <title>NetDNA API Docs</title>
-      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
-      <pubDate>Thu, 23 May 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
+      <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
+      <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
+      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Google-free Android Setup</title>
+      <link>http://niftylettuce.com/posts/google-free-android-setup</link>
+      <pubDate>Mon, 29 Oct 2018 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/google-free-android-setup</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -100,6 +92,14 @@
       <link>http://niftylettuce.com/posts/multiple-dropbox-instances</link>
       <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/multiple-dropbox-instances</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>NetDNA API Docs</title>
+      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
+      <pubDate>Thu, 23 May 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
