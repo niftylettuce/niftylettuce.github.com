@@ -30,9 +30,11 @@
 <li><p>Export a JSON collection of all users:</p>
 <blockquote>
 <p>You can filter out specific fields with the <code>-f</code> option if needed (which is useful for variable-based email).</p>
+</blockquote>
+<blockquote>
 <p>Be sure to values for <code>--port</code>, <code>--host</code>, <code>--db</code>, <code>-c</code> (collection), <code>-u</code>, and <code>-p</code>.</p>
 </blockquote>
-<pre><code class="lang-bash"> mongoexport --port 1337 --host something.mongohq.com --db your-db-name -c users -u <span class="string">'YOUR-USERNAME'</span> -p <span class="string">'YOUR-PASSWORD'</span> <span class="_">-f</span> email --jsonArray &gt; users.json
+<pre><code class="lang-bash"> mongoexport --port 1337 --host something.mongohq.com --db your-db-name -c users -u <span class="string">'YOUR-USERNAME'</span> -p <span class="string">'YOUR-PASSWORD'</span> -f email --jsonArray &gt; users.json
 </code></pre>
 </li>
 <li><p>Parse the JSON:</p>
@@ -65,11 +67,11 @@
  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;records.length; i++) {
    <span class="keyword">var</span> record = records[i]
    postmark.send({
-     From: <span class="string">'support@getprove.com'</span>,
-     To: record.email,
-     Tag: <span class="string">'user-retention'</span>,
-     Subject: <span class="string">'Prove - Integrate today and earn 100 free additional credits'</span>,
-     TextBody: text
+     <span class="attr">From</span>: <span class="string">'support@getprove.com'</span>,
+     <span class="attr">To</span>: record.email,
+     <span class="attr">Tag</span>: <span class="string">'user-retention'</span>,
+     <span class="attr">Subject</span>: <span class="string">'Prove - Integrate today and earn 100 free additional credits'</span>,
+     <span class="attr">TextBody</span>: text
    }, callback)
  }
 

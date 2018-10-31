@@ -52,8 +52,9 @@
 <pre><code class="lang-js"><span class="comment">// config.js</span>
 
 <span class="built_in">module</span>.exports = {
-  port: process.env === <span class="string">'development'</span> ? <span class="number">3000</span> : <span class="number">80</span>
+  <span class="attr">port</span>: process.env === <span class="string">'development'</span> ? <span class="number">3000</span> : <span class="number">80</span>
 };
+
 </code></pre>
 <pre><code class="lang-js"><span class="comment">// controller.js</span>
 
@@ -62,6 +63,7 @@
     res.send(<span class="string">'Hello world'</span>);
   });
 };
+
 </code></pre>
 <pre><code class="lang-js"><span class="comment">// app.js</span>
 
@@ -73,6 +75,7 @@
 app.get(<span class="string">'/'</span>, controller);
 
 app.listen(config.port);
+
 </code></pre>
 <h2 id="solution">Solution</h2>
 <h3 id="eskimo">Eskimo</h3>

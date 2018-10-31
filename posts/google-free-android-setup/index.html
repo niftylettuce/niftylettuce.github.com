@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@niftylettuce - Google-free Android Setup</title>
+    <meta name="description" content="An easy to follow back-up and install guide using LineageOS (complete with recommended applications, Google app alternatives, pro-tips, and more!">
+    <meta property="og:site_name" content="niftylettuce">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@niftylettuce - Google-free Android Setup">
+    <meta property="og:description" content="An easy to follow back-up and install guide using LineageOS (complete with recommended applications, Google app alternatives, pro-tips, and more!">
+    <meta property="og:image" content="http://niftylettuce.com/img/lettuce.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prettify.css">
+  </head>
+  <body>
+    <div id="sidebar"><a href="/" id="logo"><img src="/img/lettuce.png"></a>
+      <script src="https://www.gittip.com/assets/widgets/0002.js" data-gittip-username="niftylettuce"></script>
+    </div>
+    <div id="content">
+      <h1>Google-free Android Setup</h1>
+      <hr>
+      <p>October 2018</p>
+      <p><h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#back-up-your-device">Back-up Your Device</a></li>
+<li><a href="#install-requirements">Install Requirements</a></li>
+<li><a href="#recommended-applications">Recommended Applications</a><ul>
+<li><a href="#navigation">Navigation</a></li>
+<li><a href="#email">Email</a></li>
+<li><a href="#security--password-management">Security &amp; Password Management</a></li>
+<li><a href="#tools-messaging--entertainment">Tools, Messaging, &amp; Entertainment</a></li>
+<li><a href="#networking">Networking</a></li>
+</ul>
+</li>
+<li><a href="#pro-tips">Pro-Tips</a><ul>
+<li><a href="#want-to-go-google-free-on-your-mac">Want to go Google-free on your Mac</a></li>
+<li><a href="#sharing-a-link-from-your-computer-to-your-phone">Sharing a link from your computer to your phone</a></li>
+<li><a href="#opt-out-of-google-location-services-on-your-network-router">Opt-out of Google Location services on your Network Router</a></li>
+<li><a href="#adjust-captive-portal-detection">Adjust captive portal detection</a></li>
+</ul>
+</li>
+<li><a href="#additional-reading">Additional Reading</a></li>
+<li><a href="#contributors">Contributors</a></li>
+</ul>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>I am in no way responsible for damage to your phone or other problems caused as a result of this article.  By modifying your phone you are doing so at your own risk.  Please be careful!</p>
+<p>If you do run into issues, feel free to <a href="mailto:niftylettuce@gmail.com">email me</a> and I can try to help, but please note that I have limited time and I may not be able to respond.</p>
+<h2 id="back-up-your-device">Back-up Your Device</h2>
+<p>Unless you have a fresh device, I highly recommend backing up photos, pictures, messages, videos, contacts and other items that you may not already have a back-up of somewhere.</p>
+<p>There are two ways to do so (and I strongly recommend doing both):</p>
+<ol>
+<li>Manually over a USB cable using <a href="https://www.android.com/filetransfer/">Android File Transfer</a></li>
+<li>Using a tool called TWRP (instructions are included for doing a full system back-up below under <a href="#install-requirements">Install Requirements</a>)</li>
+</ol>
+<p>Additionally, I recommend to write down a list of your favorite apps that you have installed on a notepad somewhere.</p>
+<h2 id="install-requirements">Install Requirements</h2>
+<p>I currently recommend using LineageOS as an alternative to the stock Android operating system.  LineageOS is a free and open-source operating system for smartphones and tablet computers, based on the Android mobile platform.</p>
+<p>In order to install the operating system, please follow the steps below:</p>
+<ol>
+<li>Install ADB and fastboot by following the instructions at: <a href="https://wiki.lineageos.org/adb_fastboot_guide.html">https://wiki.lineageos.org/adb_fastboot_guide.html</a></li>
+<li>Download the latest version of TWRP recovery at: <a href="https://dl.twrp.me/bacon/">https://dl.twrp.me/bacon/</a></li>
+<li>Download the latest version of LineageOS <strong>for your specific device</strong> at: <a href="https://download.lineageos.org">https://download.lineageos.org</a></li>
+<li>Unlock your phone’s bootloader at: <a href="https://wiki.lineageos.org/devices/bacon/install">https://wiki.lineageos.org/devices/bacon/install</a></li>
+<li><p>Boot into the bootloader with <code>adb</code>:</p>
+<blockquote>
+<p>Run this command from your terminal or command prompt:</p>
+</blockquote>
+<pre><code class="lang-sh">adb reboot bootloader
+</code></pre>
+</li>
+<li><p>Install TWRP (recovery management software) with <code>fastboot</code>:</p>
+<blockquote>
+<p>Be sure to replace “path/to/twrp.bacon.img” in the script below with the path to the file you downloaded in step 2 above</p>
+<p>Run this command from your terminal or command prompt:</p>
+</blockquote>
+<pre><code class="lang-sh">fastboot flash recovery path/to/twrp.bacon.img
+</code></pre>
+</li>
+<li>Boot into recovery mode (press and hold volume down and power button for a few seconds – may vary depending on what your device is; you can search on <a href="https://duckduckgo.com">DuckDuckGo</a> for your device’s shortcut if necessary)</li>
+<li>Make a back-up with TWRP at: <a href="https://www.howtogeek.com/240582/how-to-back-up-and-restore-your-android-phone-with-twrp/">https://www.howtogeek.com/240582/how-to-back-up-and-restore-your-android-phone-with-twrp/</a></li>
+<li><p>Pull the recovery backup ZIP off the phone using <code>adb</code>:</p>
+<blockquote>
+<p>Be sure to replace “/sdcard/path-to-backup.zip” with the path to the back-up on your phone and “my-backup.zip” with the path to where you’d like to store the file locally on your computer</p>
+<p>Run this command from your terminal or command prompt:</p>
+</blockquote>
+<pre><code class="lang-sh">adb pull /sdcard/path-to-backup.zip my-backup.zip
+</code></pre>
+</li>
+<li>Repeat step 7 above</li>
+<li>Under the recovery mode menu, navigate to <code>Wipe</code> and then run a <code>Factory Reset</code></li>
+<li><p>While in recovery mode, push the LineageOS ROM to your phone:</p>
+<blockquote>
+<p>Be sure to replace “path/to/lineage.zip” in the script below with the path to the file you downloaded in step 3 above</p>
+<p>Run this command from your terminal or command prompt:</p>
+</blockquote>
+<pre><code class="lang-sh">adb push path/to/lineage.zip /sdcard/
+</code></pre>
+</li>
+<li>Under the recovery mode menu, navigate to <code>Install</code> and select the file you just pushed inside the <code>/sdcard/</code> folder</li>
+<li>(Optional) Root the device by installing the <code>arm</code> SU add-on at: <a href="https://download.lineageos.org/extras">https://download.lineageos.org/extras</a> (you’ll push it to <code>/sdcard/</code> and then install it similarly LineageOS in step 13)</li>
+<li>Reboot the device (if you’re in Recovery mode, go to <code>Reboot</code> and then tap <code>System</code>)</li>
+<li>Install <a href="https://f-droid.org/">F-Droid</a></li>
+<li>Install your preferred applications from <a href="#recommended-applications">Recommended Applications</a> below</li>
+</ol>
+<h2 id="recommended-applications">Recommended Applications</h2>
+<p>All of the applications listed below are Google-free alternatives and/or useful applications that I highly recommend.</p>
+<p>If you’re looking for a Google-free alternative to a favorite app of yours, please <a href="mailto:niftylettuce@gmail.com">email me</a> and I’d be glad to help.</p>
+<h3 id="navigation">Navigation</h3>
+<ul>
+<li><a href="https://f-droid.org/en/packages/net.osmand.plus/">OsmAnd+</a> for navigation and directions using OpenStreetMap data (an alternative to Google Maps)</li>
+<li><a href="https://f-droid.org/en/packages/com.vonglasow.michael.satstat/">SatStat</a> for viewing satellite, GPS, and other sensor data</li>
+</ul>
+<h3 id="email">Email</h3>
+<ul>
+<li><a href="https://f-droid.org/packages/com.fsck.k9/">K-9 Mail</a> for receiving email from multiple accounts with support for OpenPGP encryption (an alternative to Gmail)</li>
+<li><a href="https://forwardemail.net">ForwardEmail</a> for private, encrypted, and free email forwarding (I made this – it’s an alternative to Google Business)</li>
+</ul>
+<h3 id="security-password-management">Security &amp; Password Management</h3>
+<ul>
+<li><a href="https://f-droid.org/en/packages/org.fedorahosted.freeotp/">FreeOTP</a> for two-factor authentication (2FA) token management (an alternative to Google Authenticator)</li>
+<li><a href="https://f-droid.org/en/packages/de.srlabs.snoopsnitch/">SnoopSnitch</a> for checking mobile network security</li>
+<li><a href="https://flowcrypt.com/download">FlowCrypt</a> for PGP encryption (not on F-Droid)</li>
+<li><a href="https://f-droid.org/en/packages/org.sufficientlysecure.keychain/">OpenKeychain</a> for encrypting files and communications (OpenPGP compliant and pairs well with K-9 mail)</li>
+<li><a href="https://play.google.com/store/apps/details?id=skimmerscammer.skimmerscammer&amp;hl=en_US">Skimmer Scanner</a> (<a href="https://gitlab.com/fdroid/rfp/issues/353">not yet</a> on F-Droid, but you can download APK using Yalp Store, see below)</li>
+<li><a href="https://f-droid.org/en/packages/org.adaway/">AdAway</a> for blocking ads, uses hosts file</li>
+<li><a href="https://f-droid.org/en/packages/org.blokada.alarm/">Blokada</a> for blocking ads</li>
+</ul>
+<h3 id="tools-messaging-entertainment">Tools, Messaging, &amp; Entertainment</h3>
+<ul>
+<li><a href="https://f-droid.org/en/packages/com.menny.android.anysoftkeyboard/">AnySoftKeyboard</a> for an on-screen keyboard (an alternative to Google Keyboard and Android’s stock keyboard)</li>
+<li><a href="https://f-droid.org/packages/com.moez.QKSMS/">QKSMS</a> for SMS messaging (an alternative to Android’s stock Messenger and Google Hangouts)</li>
+<li><a href="https://f-droid.org/en/packages/org.mozilla.klar/">Firefox Klar</a> for private browsing with ad-blocking and web-tracking blocking support (an alternative to Google Chrome and Android’s stock browser)</li>
+<li><a href="https://f-droid.org/en/packages/org.y20k.transistor/">Transistor</a> for listening to radio streams over the internet</li>
+<li><a href="https://f-droid.org/en/packages/ws.xsoh.etar/">Etar</a> for calendar management (an alternative to Google Calendar)</li>
+<li><a href="https://www.f-droid.org/en/packages/com.poupa.vinylmusicplayer/">Vinyl Music Player</a> for listening to music (an alternative to Android’s stock music player and Google Music)</li>
+<li><a href="https://f-droid.org/en/packages/ch.deletescape.lawnchair.plah/">Lawnchair</a> for a better launcher with customizability (an alternative to Android’s stock launcher)</li>
+<li><a href="https://f-droid.org/en/packages/net.sourceforge.opencamera/">Open Camera</a> for taking pictures, video, and more (an alternative to Android Camera and Google’s Camera)</li>
+<li><a href="https://f-droid.org/en/packages/de.t_dankworth.secscanqr/">SecScanQR</a> for QR code scanning and generation (secure and private alternative)</li>
+<li><a href="https://f-droid.org/packages/com.zeapo.pwdstore/">Password Store</a> for simple password management, built on top of <a href="https://www.passwordstore.org/">pass</a> – you may also want to use <a href="https://github.com/roddhjav/pass-import">pass-import</a> (an alternative to Google Sync)</li>
+<li><a href="https://f-droid.org/en/packages/org.schabi.newpipe/">NewPipe</a> for viewing YouTube videos (an alternative to YouTube)</li>
+<li><a href="https://f-droid.org/en/packages/ryey.easer/">Easer</a> for event-driven Android automation</li>
+<li><a href="https://f-droid.org/en/packages/com.termux/">Termux</a> for a terminal emulator with SSH support and more</li>
+<li><a href="https://f-droid.org/en/packages/info.papdt.blackblub/">Night Screen</a> for adjusting brightness and screen color to prevent eye-strain</li>
+<li><a href="https://f-droid.org/en/packages/com.github.yeriomin.yalpstore/">Yalp Store</a> for downloading apps directly from Google Play Store as APK files (alternative to Google Play Store)</li>
+<li><a href="https://f-droid.org/en/packages/me.ccrama.redditslide/">Slide</a> for browsing Reddit</li>
+<li><a href="https://f-droid.org/en/packages/it.feio.android.omninotes.foss/">Omni Notes</a> for taking notes (an alternative to Google Keep)</li>
+</ul>
+<h3 id="networking">Networking</h3>
+<ul>
+<li><a href="https://f-droid.org/en/packages/de.blinkt.openvpn/">OpenVPN</a> for virtual private network (“VPN”)</li>
+</ul>
+<h2 id="pro-tips">Pro-Tips</h2>
+<h3 id="want-to-go-google-free-on-your-mac">Want to go Google-free on your Mac</h3>
+<p>Send me <a href="mailto:niftylettuce@gmail.com">an email</a> and I’ll ping you back once my article for that is up.</p>
+<h3 id="sharing-a-link-from-your-computer-to-your-phone">Sharing a link from your computer to your phone</h3>
+<p>From your computer, simply copy the link to your clipboard, go to <a href="https://duckduckgo.com">https://duckduckgo.com</a>, and search for <code>!qr &lt;insert link here&gt;</code>.  DuckDuckGo will automatically generate a QR code you can scan with your phone using SecScanQR (a QR code app listed above).</p>
+<h3 id="opt-out-of-google-location-services-on-your-network-router">Opt-out of Google Location services on your Network Router</h3>
+<p>See <a href="https://support.google.com/maps/answer/1725632?hl=en">https://support.google.com/maps/answer/1725632?hl=en</a>.  You will need to affix your router’s SSID name with <code>_nomap</code>.</p>
+<h3 id="adjust-captive-portal-detection">Adjust captive portal detection</h3>
+<p>You may also wish to disable <a href="https://en.wikipedia.org/wiki/Captive_portal">captive portal detection</a> or change the default from Google’s servers.  <strong>Do not do this unless you are highly technical and understand the implications of doing this.  Disabling captive portal will most likely disable your device from working at airports, coffee shops, and at public wi-fi hotspots.</strong></p>
+<p>This assumes you have Android Debugging Mode turned on and Developer Mode enabled: <a href="https://www.digitaltrends.com/mobile/how-to-get-developer-options-on-android/">https://www.digitaltrends.com/mobile/how-to-get-developer-options-on-android/</a></p>
+<blockquote>
+<p>Note you will need to reboot your device after running the below commands:</p>
+</blockquote>
+<p>To disable:</p>
+<pre><code class="lang-sh">adb shell
+settings put global captive_portal_mode 0
+settings delete global captive_portal_mode
+</code></pre>
+<p>Or, to re-enable:</p>
+<pre><code class="lang-sh">adb shell
+settings put global captive_portal_mode 1
+</code></pre>
+<h2 id="additional-reading">Additional Reading</h2>
+<ul>
+<li><a href="https://opengapps.org/">Open GApps</a> – not Google-free, but allows you to install Google Play Store and download apps from the app store</li>
+<li><a href="https://microg.org/">microG Project</a> – a free-as-in-freedom re-implementation of Google’s proprietary Android user space apps and libraries</li>
+<li><a href="https://lineage.microg.org/">LineageOS for microG</a> – access all the Google services without proprietary closed software</li>
+<li><a href="https://verummeum.com/blog/2018/09/30/google-free-android/">Google Free Android</a> – another similar blog post to this</li>
+<li><a href="https://bytemybits.gitlab.io/post/2018-05-23-how-to-android-without-google-easy-way/">How to Android without Google (easy way)</a></li>
+<li><a href="https://bytemybits.gitlab.io/post/2018-05-23-how-to-android-without-google-hard-way/">How to Android without Google (hard way)</a></li>
+</ul>
+<h2 id="contributors">Contributors</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Website</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nick Baugh</strong></td>
+<td><a href="http://niftylettuce.com/">http://niftylettuce.com/</a></td>
+</tr>
+</tbody>
+</table>
+</p>
+      <hr><small><a href="mailto:niftylettuce@gmail.com">niftylettuce@gmail.com</a>&nbsp;|&nbsp;<a href="https://github.com/niftylettuce">Github</a>&nbsp;|&nbsp;<a href="http://twitter.com/niftylettuce">Twitter</a>&nbsp;|&nbsp;<a href="http://eepurl.com/AlJH1">Updates</a>&nbsp;|&nbsp;<a href="/feed.xml">RSS/XML Feed</a></small><a href="http://wintersmith.io/" title="Powered by Wintersmith" id="wintersmith"><img src="/img/wintersmith.svg" alt="Powered by Wintersmith"></a>
+      <p><a href="https://www.digitalocean.com/"><img src="/img/digital-ocean-badge.png"></a></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/vendor/prettify.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40007865-1', 'niftylettuce.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

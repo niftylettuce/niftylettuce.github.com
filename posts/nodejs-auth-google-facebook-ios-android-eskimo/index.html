@@ -30,8 +30,14 @@
 <p>Let’s start by thinking of common questions related to this topic:</p>
 <blockquote>
 <p>How do I authenticate Facebook and/or Google with my RESTful API and iOS app?  Similarly, how do I do this for Android and Web? &mdash; and is there a simple way to normalize future API requests (that require auth) regardless of authentication strategy?</p>
+</blockquote>
+<blockquote>
 <p>How do I handle future requests with my iOS or Android app that require authentication?  For example, if my app shows a list-view of items, and the API endpoint to get those items requires authentication, how do I send my request to the endpoint?  Do I use the <code>access_token</code> from Facebook or a JWT with Google?  Do I use Basic Authentication somehow?</p>
+</blockquote>
+<blockquote>
 <p>How do I verify a <a href="https://developers.google.com/accounts/docs/OAuth2Login#validatinganidtoken">Google ID token</a>?  Similarly, how can I verify a <a href="https://developers.facebook.com/docs/facebook-login/access-tokens">Facebook access token</a>?  Also, how can I be sure that these tokens are generated for my app and not someone elses?</p>
+</blockquote>
+<blockquote>
 <p>How can I use <a href="http://passportjs.org/">Passport</a> in my RESTful API and have it support both Web, iOS, and Android apps (with Email, Facebook, and Google authentication strategies)?</p>
 </blockquote>
 <p>What are existing discussion threads related to these questions?</p>
@@ -53,7 +59,7 @@
 </li>
 <li><p>Send a <code>POST</code> request to the Node.js app API endpoint of <code>/api/auth/facebook</code> or <code>/api/auth/google</code> (depending on which SDK you’re using).  In the request body, you should include <code>access_token</code> (and optionally <code>refresh_token</code> too).  The API will respond with a <code>user</code> object, of which you’ll want to cache in the mobile app the value of <code>user.api_token</code>.  For example, here’s how it’d look using <code>curl</code>:</p>
 <p>Mobile App Request:</p>
-<pre><code class="lang-bash">curl -X POST <span class="_">-d</span> <span class="string">"access_token=123456789"</span> \
+<pre><code class="lang-bash">curl -X POST -d <span class="string">"access_token=123456789"</span> \
    <span class="string">"http://localhost:3000/api/auth/facebook"</span>
 </code></pre>
 <p>Node.js App Response:</p>
@@ -74,8 +80,8 @@
 <p>For example, here’s how it’d look using <code>curl</code> for the <code>email</code> type endpoint:</p>
 <p>Mobile App Request:</p>
 <pre><code class="lang-bash">curl -X POST \
-    <span class="_">-d</span> <span class="string">"email=niftylettuce@gmail.com"</span> \
-    <span class="_">-d</span> <span class="string">"password=123456"</span> \
+    -d <span class="string">"email=niftylettuce@gmail.com"</span> \
+    -d <span class="string">"password=123456"</span> \
     <span class="string">"http://localhost:3000/api/auth/email"</span>
 </code></pre>
 <p>Node.js App Response:</p>
@@ -88,10 +94,10 @@
 <p>If you have not yet registered this email address, then you can do so by sending a request to the <code>/api/auth/signup</code> route:</p>
 <p>Mobile App Request:</p>
 <pre><code class="lang-bash">curl -X POST \
-    <span class="_">-d</span> <span class="string">"email=niftylettuce%2Beskimo@gmail.com"</span> \
-    <span class="_">-d</span> <span class="string">"name=Nifty"</span> \
-    <span class="_">-d</span> <span class="string">"surname=Lettuce"</span> \
-    <span class="_">-d</span> <span class="string">"password=123456"</span> \
+    -d <span class="string">"email=niftylettuce%2Beskimo@gmail.com"</span> \
+    -d <span class="string">"name=Nifty"</span> \
+    -d <span class="string">"surname=Lettuce"</span> \
+    -d <span class="string">"password=123456"</span> \
     <span class="string">"http://localhost:3000/api/auth/signup"</span>
 </code></pre>
 <p>Node.js App Response:</p>
@@ -107,7 +113,7 @@
 <p>Mobile App Request:</p>
 <pre><code class="lang-bash">curl -X PUT \
     -u <span class="string">"VNaHU6UVbrV8BHUmfbXf3p2YKfG0lrTI:"</span> \
-    <span class="_">-d</span> <span class="string">"name=John"</span> \
+    -d <span class="string">"name=John"</span> \
     <span class="string">"http://localhost:3000/api/user"</span>
 </code></pre>
 <p>Node.js App Response:</p>
@@ -133,7 +139,7 @@ eskimo --version
 <li><p>Create a new project:</p>
 <pre><code class="lang-bash">eskimo create my-project
 <span class="built_in">cd</span> my-project
-npm install <span class="_">-d</span>
+npm install -d
 gulp postinstall
 </code></pre>
 </li>
@@ -148,7 +154,7 @@ gulp postinstall
 <p>Also be sure to go to “API’S &amp; auth” &rarr; “Consent screen” &ndash; and select an “EMAIL ADDRESS” and enter a “PRODUCT NAME” value (otherwise your Google auth strategies <a href="https://stackoverflow.com/questions/18677244/error-invalid-client-no-application-name">will not work</a>).</p>
 <p><strong>Facebook:</strong> Go to <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> and create a new “Website” application with a “Site URL” of <code>http://localhost:3000</code> (skip quick start wizard) &ndash; then copy/paste the App ID and App Secret Keys from “Settings” page into the <code>settings.facebook</code> object of <code>boot/config.js</code>.  Also go to “Settings” &rarr; “Advanced” and add a “Valid OAuth redirect URIs” value of <code>http://localhost:3000/auth/facebook/callback</code>.</p>
 <blockquote>
-<p><strong>NOTE</strong>: There is a well-known Facebook bug that appends the hash value of “#<em>=</em>“ to the end of your URL upon a successful Facebook callback.  We’ve already implemented <a href="https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-40427410">my patch</a> into <code>assets/public/js/fb-appended-hash-bug-fix.js</code> and it conditionally loads into <code>app/views/layout.jade</code> if <code>settings.facebook.enabled</code> is <code>true</code>.</p>
+<p><strong>NOTE</strong>: There is a well-known Facebook bug that appends the hash value of “#_=_” to the end of your URL upon a successful Facebook callback.  We’ve already implemented <a href="https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-40427410">my patch</a> into <code>assets/public/js/fb-appended-hash-bug-fix.js</code> and it conditionally loads into <code>app/views/layout.jade</code> if <code>settings.facebook.enabled</code> is <code>true</code>.</p>
 </blockquote>
 </li>
 <li><p>Integrate the Google and Facebook SDK’s into your Android and iOS apps (using the flow mentioned in <a href="#visualize-authentication-flow">Visualize Authentication Flow</a>).  For making RESTful API requests from mobile apps to the Node.js app &ndash; you can use <a href="http://afnetworking.com/">AFNetworking</a> or <a href="http://restkit.org/">RestKit</a> for iOS &ndash; and <a href="https://square.github.io/retrofit/">Retrofit</a> for Android. You can simply search on Google for how to integrate the Google and Facebook SDK’s into your mobile apps.</p>
@@ -158,17 +164,17 @@ gulp postinstall
 email: {
  <span class="comment">// &lt;https://github.com/andris9/Nodemailer&gt;</span>
  transport: {
-   service: <span class="string">'gmail'</span>,
-   auth: {
-     user: <span class="string">'user@gmail.com'</span>,
-     pass: <span class="string">'abc123'</span>
+   <span class="attr">service</span>: <span class="string">'gmail'</span>,
+   <span class="attr">auth</span>: {
+     <span class="attr">user</span>: <span class="string">'user@gmail.com'</span>,
+     <span class="attr">pass</span>: <span class="string">'abc123'</span>
    }
  }
 },
 <span class="comment">// ...</span>
 </code></pre>
 </li>
-<li><p>If you have any questions, then <a href="https://gitter.im/niftylettuce/eskimo">join the Gitter chat room</a>, email me at <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#x6e;&#105;&#x66;&#x74;&#121;&#x6c;&#101;&#116;&#116;&#x75;&#99;&#101;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">&#x6e;&#105;&#x66;&#x74;&#121;&#x6c;&#101;&#116;&#116;&#x75;&#99;&#101;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;</a>, and/or file an issue on GitHub at <a href="https://github.com/niftylettuce/eskimo/issues/new">https://github.com/niftylettuce/eskimo/issues/new</a>.</p>
+<li><p>If you have any questions, then <a href="https://gitter.im/niftylettuce/eskimo">join the Gitter chat room</a>, email me at <a href="mailto:&#x6e;&#x69;&#x66;&#116;&#121;&#x6c;&#101;&#116;&#116;&#117;&#99;&#101;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#x6e;&#x69;&#x66;&#116;&#121;&#x6c;&#101;&#116;&#116;&#117;&#99;&#101;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a>, and/or file an issue on GitHub at <a href="https://github.com/niftylettuce/eskimo/issues/new">https://github.com/niftylettuce/eskimo/issues/new</a>.</p>
 </li>
 <li><p>Good luck!</p>
 </li>
