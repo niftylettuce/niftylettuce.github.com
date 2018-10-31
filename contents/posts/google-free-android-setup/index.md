@@ -124,6 +124,9 @@ If you're looking for a Google-free alternative to a favorite app of yours, plea
 * [OpenKeychain](https://f-droid.org/en/packages/org.sufficientlysecure.keychain/) for encrypting files and communications (OpenPGP compliant and pairs well with K-9 mail)
 * [Skimmer Scanner](https://play.google.com/store/apps/details?id=skimmerscammer.skimmerscammer&hl=en_US) ([not yet](https://gitlab.com/fdroid/rfp/issues/353) on F-Droid, but you can download APK using Yalp Store, see below)
 * [AdAway](https://f-droid.org/en/packages/org.adaway/) for blocking ads, uses hosts file (requires root, see step 14 above in [Install Requirements](#install-requirements))
+* [Password Store](https://f-droid.org/packages/com.zeapo.pwdstore/) for simple password management, built on top of [pass](https://www.passwordstore.org/) – you may also want to use [pass-import](https://github.com/roddhjav/pass-import) (an alternative to Google Sync)
+* [AFWall+](https://f-droid.org/en/packages/dev.ukanth.ufirewall/) for root-based (iptables) firewall management (requires root, see step 14 above in [Install Requirements](#install-requirements))
+* [PilferShush Jammer](https://f-droid.org/en/packages/cityfreqs.com.pilfershushjammer/) for blocking unwanted use of onboard microphone (using in passive mode is recommended, it will pause during telephony interrupts &ndash; e.g. when you make calls)
 
 ### Tools, Messaging, & Entertainment
 
@@ -136,12 +139,11 @@ If you're looking for a Google-free alternative to a favorite app of yours, plea
 * [Lawnchair](https://f-droid.org/en/packages/ch.deletescape.lawnchair.plah/) for a better launcher with customizability (an alternative to Android's stock launcher)
 * [Open Camera](https://f-droid.org/en/packages/net.sourceforge.opencamera/) for taking pictures, video, and more (an alternative to Android Camera and Google's Camera)
 * [SecScanQR](https://f-droid.org/en/packages/de.t_dankworth.secscanqr/) for QR code scanning and generation (secure and private alternative)
-* [Password Store](https://f-droid.org/packages/com.zeapo.pwdstore/) for simple password management, built on top of [pass](https://www.passwordstore.org/) – you may also want to use [pass-import](https://github.com/roddhjav/pass-import) (an alternative to Google Sync)
 * [NewPipe](https://f-droid.org/en/packages/org.schabi.newpipe/) for viewing YouTube videos (an alternative to YouTube)
 * [Easer](https://f-droid.org/en/packages/ryey.easer/) for event-driven Android automation
 * [Termux](https://f-droid.org/en/packages/com.termux/) for a terminal emulator with SSH support and more
 * [Night Screen](https://f-droid.org/en/packages/info.papdt.blackblub/) for adjusting brightness and screen color to prevent eye-strain
-* [Yalp Store](https://f-droid.org/en/packages/com.github.yeriomin.yalpstore/) for downloading apps directly from Google Play Store as APK files (alternative to Google Play Store)
+* [Yalp Store](https://f-droid.org/en/packages/com.github.yeriomin.yalpstore/) for downloading apps directly from Google Play Store as APK files (alternative to Google Play Store &ndash; **you can download apps like Slack and more using this!**)
 * [Slide](https://f-droid.org/en/packages/me.ccrama.redditslide/) for browsing Reddit
 * [Omni Notes](https://f-droid.org/en/packages/it.feio.android.omninotes.foss/) for taking notes (an alternative to Google Keep)
 
