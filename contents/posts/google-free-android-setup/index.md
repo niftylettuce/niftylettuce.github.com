@@ -160,7 +160,7 @@ For example, you might need to completely re-flash firmware, radio, and bootload
 
 ### How to back-up SMS messages
 
-Simply install QKSMS (see link above), and in the app first sync with native messages, then go to `Backup and restore`, click on "Backup now", and then `adb pull /sdcard/QKSMS some-local-path` (replace "some-local-path" with where you want to save the back-up locally).  Later once you're done with all the steps above, you can `adb push some-local-path /sdcard/QKSMS-backup`, re-open the QKSMS app after installing it, and restore from back-up.
+Simply install QKSMS (see link above), and in the app first sync with native messages, then go to `Backup and restore`, click on "Backup now", and then `adb pull /sdcard/QKSMS some-local-path` (replace "some-local-path" with where you want to save the back-up locally).  Later once you're done with all the steps above, you can `adb push some-local-path /sdcard/QKSMS`, re-open the QKSMS app after installing it, and restore from back-up.  Make sure there is a `.json` file in the `/sdcard/QKSMS/Backups` folder, otherwise it will not work.
 
 ### Want to go Google-free on your Mac
 
