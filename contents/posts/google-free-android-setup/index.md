@@ -54,7 +54,7 @@ In order to install the operating system, please follow the steps below:
 1. Install ADB and fastboot by following the instructions at: <https://wiki.lineageos.org/adb_fastboot_guide.html>
 2. Download the latest version of TWRP recovery **for your specific device** at: <https://twrp.me/Devices/> (sometimes you may need to actually use an older version, e.g. if you are unable to boot into recovery mode, but first try the latest if possible)
 3. Download the latest version of LineageOS **for your specific device** at: <https://download.lineageos.org>
-4. Unlock your phone's bootloader at: <https://wiki.lineageos.org/devices/bacon/install>
+4. Go to <https://wiki.lineageos.org/devices/> and click on **your specific device**.  Then proceed to unlock your phone's bootloader by clicking on the Installation instructions shown and following the instructions for "unlocking the bootloader".  For example, if you have a Google Nexus 5X you will be following the instructions here <https://wiki.lineageos.org/devices/bullhead/install>.  If your device's respective installation guide does not have steps for unlocking the bootloader you may need to search XDA developer forums.  Note that not all devices have bootloaders that can be unlocked (e.g. the Samsung Galaxy S8 is not supported).
 5. Boot into the bootloader with `adb`:
 
    > Run this command from your terminal or command prompt:
