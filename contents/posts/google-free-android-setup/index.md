@@ -94,7 +94,7 @@ In order to install the operating system, please follow the steps below:
     adb push path/to/lineage.zip /sdcard/
     ```
 13. Under the recovery mode menu, navigate to `Install` and select the file you just pushed inside the `/sdcard/` folder
-14. (Optional) Root the device by installing the `arm` SU add-on at: <https://download.lineageos.org/extras> (you'll push it to `/sdcard/` and then install it similarly LineageOS in step 13)
+14. (Optional) Root the device by installing the `arm` SU add-on at: <https://download.lineageos.org/extras> (make sure you reboot the device after running step 13 and test everything out first &ndash; then you'll push it to `/sdcard/` and then install it similarly LineageOS in step 13)
 15. Reboot the device (if you're in Recovery mode, go to `Reboot` and then tap `System`)
 16. Install [F-Droid](https://f-droid.org/)
 17. Install your preferred applications from [Recommended Applications](#recommended-applications) below
