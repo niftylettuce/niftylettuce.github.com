@@ -146,6 +146,9 @@ If you're looking for a Google-free alternative to a favorite app of yours, plea
 * [Yalp Store](https://f-droid.org/en/packages/com.github.yeriomin.yalpstore/) for downloading apps directly from Google Play Store as APK files (alternative to Google Play Store &ndash; **you can download apps like Slack and more using this!**)
 * [Slide](https://f-droid.org/en/packages/me.ccrama.redditslide/) for browsing Reddit
 * [Omni Notes](https://f-droid.org/en/packages/it.feio.android.omninotes.foss/) for taking notes (an alternative to Google Keep)
+* [GoodWeather](https://f-droid.org/en/packages/org.asdtm.goodweather/) for weather (make sure to add the widget to home screen) (alternative to Google Weather)
+* [Forecastie](https://f-droid.org/en/packages/cz.martykan.forecastie/) for weather (make sure to add widget to home screen) (alternative to Google Weather)
+* [Pedometer](https://f-droid.org/en/packages/de.j4velin.pedometer/) for pedometer (alternative to Google Fit)
 
 ### Networking
 
