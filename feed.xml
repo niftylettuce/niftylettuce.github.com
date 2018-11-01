@@ -48,6 +48,14 @@
       <description></description>
     </item>
     <item>
+      <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
+      <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
+      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
       <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
       <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
       <pubDate>Tue, 26 Aug 2014 19:00:00 -0500</pubDate>
@@ -64,10 +72,18 @@
       <description></description>
     </item>
     <item>
-      <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
-      <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
-      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
+      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
+      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
+      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Micro-Projects for Fun and Profit</title>
+      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
+      <pubDate>Tue, 25 Jun 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -84,22 +100,6 @@
       <link>http://niftylettuce.com/posts/netdna-api-docs</link>
       <pubDate>Thu, 23 May 2013 19:00:00 -0500</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Micro-Projects for Fun and Profit</title>
-      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
-      <pubDate>Tue, 25 Jun 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
-      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
-      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
