@@ -133,7 +133,7 @@ If you're looking for a Google-free alternative to a favorite app of yours, plea
 * [AnySoftKeyboard](https://f-droid.org/en/packages/com.menny.android.anysoftkeyboard/) for an on-screen keyboard (an alternative to Google Keyboard and Android's stock keyboard)
 * [QKSMS](https://f-droid.org/packages/com.moez.QKSMS/) for SMS messaging (an alternative to Android's stock Messenger and Google Hangouts)
 * [Firefox Klar](https://f-droid.org/en/packages/org.mozilla.klar/) for private browsing with ad-blocking and web-tracking blocking support (an alternative to Google Chrome and Android's stock browser)
-* [Transistor](https://f-droid.org/en/packages/org.y20k.transistor/) for listening to radio streams over the internet
+* [Transistor](https://f-droid.org/en/packages/org.y20k.transistor/) for listening to radio streams over the internet (you can use <https://www.radio-browser.info/gui/#/topvote> for copying/adding links in the Transistor app &ndash; see my link below for [Sharing a link from your computer to your phone](#sharing-a-link-from-your-computer-to-your-phone))
 * [Etar](https://f-droid.org/en/packages/ws.xsoh.etar/) for calendar management (an alternative to Google Calendar)
 * [Vinyl Music Player](https://www.f-droid.org/en/packages/com.poupa.vinylmusicplayer/) for listening to music (an alternative to Android's stock music player and Google Music)
 * [Lawnchair](https://f-droid.org/en/packages/ch.deletescape.lawnchair.plah/) for a better launcher with customizability (an alternative to Android's stock launcher)
