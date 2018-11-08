@@ -8,18 +8,18 @@
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>60 Second User Retention with Node.js and MongoDB</title>
-      <link>http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</link>
-      <pubDate>Mon, 24 Jun 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Android Local Testing</title>
       <link>http://niftylettuce.com/posts/android-local-testing</link>
       <pubDate>Sun, 28 Apr 2013 19:00:00 -0500</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>60 Second User Retention with Node.js and MongoDB</title>
+      <link>http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</link>
+      <pubDate>Mon, 24 Jun 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -32,58 +32,10 @@
       <description></description>
     </item>
     <item>
-      <title>Google-free Android Setup</title>
-      <link>http://niftylettuce.com/posts/google-free-android-setup</link>
-      <pubDate>Mon, 29 Oct 2018 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/google-free-android-setup</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
-      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
-      <pubDate>Wed, 13 Apr 2016 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
       <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
       <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
-      <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
-      <pubDate>Tue, 26 Aug 2014 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Does Pinterest own the word &quot;pin&quot;?</title>
-      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
-      <pubDate>Sat, 01 Jun 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
-      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
-      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>Micro-Projects for Fun and Profit</title>
-      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
-      <pubDate>Tue, 25 Jun 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -104,10 +56,58 @@
       <description></description>
     </item>
     <item>
+      <title>Micro-Projects for Fun and Profit</title>
+      <link>http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</link>
+      <pubDate>Tue, 25 Jun 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/micro-projects-for-fun-and-profit</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
+      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
+      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Google-free Android Setup</title>
+      <link>http://niftylettuce.com/posts/google-free-android-setup</link>
+      <pubDate>Mon, 29 Oct 2018 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/google-free-android-setup</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Eskimo - Node Boilerplate Framework for Rapid MVP's</title>
+      <link>http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</link>
+      <pubDate>Tue, 26 Aug 2014 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/eskimo-rapid-mvp-node-boilerplate</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
       <title>Node.js Auth for Email/Google/Facebook on Web/iOS/Android with Eskimo</title>
       <link>http://niftylettuce.com/posts/nodejs-auth-google-facebook-ios-android-eskimo</link>
       <pubDate>Thu, 16 Oct 2014 19:00:00 -0500</pubDate>
       <guid isPermaLink="true">http://niftylettuce.com/posts/nodejs-auth-google-facebook-ios-android-eskimo</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Does Pinterest own the word &quot;pin&quot;?</title>
+      <link>http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</link>
+      <pubDate>Sat, 01 Jun 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/does-pinterest-own-the-word-pin</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>Automated Continuous Integration Setup for Graceful and Zero-Downtime Node App Deployment using GitHub, PM2, Digital Ocean, and SemaphoreCI</title>
+      <link>http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</link>
+      <pubDate>Wed, 13 Apr 2016 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/automated-node-app-ci-graceful-zerodowntime-github-pm2</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
