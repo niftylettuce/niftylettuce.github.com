@@ -157,6 +157,16 @@ If you're looking for a Google-free alternative to a favorite app of yours, plea
 
 ## Pro-Tips
 
+### Set Custom Network Time Protocol (NTP) Server to CloudFlare on Android
+
+CloudFlare now offers time services at <https://developers.cloudflare.com/time-services/ntp/usage/>.
+
+```sh
+adb shell settings put global ntp_server time.cloudflare.com
+```
+
+Thanks to this [gist](https://gist.github.com/xujiaao/63cb3bbea9fe22e79206e5eb7ba82d0e) for the command.
+
 ### If you get stuck, search on XDA
 
 Do a search on DuckDuckGo for "xda lineageos $deviceName $yourProblem".  You should generally find a solution.
