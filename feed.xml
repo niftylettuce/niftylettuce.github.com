@@ -8,14 +8,6 @@
     <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
     <language>en</language>
     <item>
-      <title>Android Local Testing</title>
-      <link>http://niftylettuce.com/posts/android-local-testing</link>
-      <pubDate>Sun, 28 Apr 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
       <title>60 Second User Retention with Node.js and MongoDB</title>
       <link>http://niftylettuce.com/posts/60-second-user-retention-with-mongodb-and-nodejs</link>
       <pubDate>Mon, 24 Jun 2013 19:00:00 -0500</pubDate>
@@ -32,6 +24,14 @@
       <description></description>
     </item>
     <item>
+      <title>Android Local Testing</title>
+      <link>http://niftylettuce.com/posts/android-local-testing</link>
+      <pubDate>Sun, 28 Apr 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/android-local-testing</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
       <title>Lenovo B570 Flash Bios for WWLAN Whitelisting</title>
       <link>http://niftylettuce.com/posts/lenovo-b570-flash-bios-wwlan-whitelist</link>
       <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
@@ -40,18 +40,10 @@
       <description></description>
     </item>
     <item>
-      <title>How to run multiple Dropbox instances on Ubuntu/Debian/Linux Mint.</title>
-      <link>http://niftylettuce.com/posts/multiple-dropbox-instances</link>
-      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/multiple-dropbox-instances</guid>
-      <author>niftylettuce</author>
-      <description></description>
-    </item>
-    <item>
-      <title>NetDNA API Docs</title>
-      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
-      <pubDate>Thu, 23 May 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
+      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
+      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
+      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
@@ -64,10 +56,18 @@
       <description></description>
     </item>
     <item>
-      <title>Linux Mint (Ubuntu) Node.js Hacker Setup</title>
-      <link>http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</link>
-      <pubDate>Sun, 15 Sep 2013 19:00:00 -0500</pubDate>
-      <guid isPermaLink="true">http://niftylettuce.com/posts/linux-mint-ubuntu-nodejs-hacker-setup</guid>
+      <title>NetDNA API Docs</title>
+      <link>http://niftylettuce.com/posts/netdna-api-docs</link>
+      <pubDate>Thu, 23 May 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/netdna-api-docs</guid>
+      <author>niftylettuce</author>
+      <description></description>
+    </item>
+    <item>
+      <title>How to run multiple Dropbox instances on Ubuntu/Debian/Linux Mint.</title>
+      <link>http://niftylettuce.com/posts/multiple-dropbox-instances</link>
+      <pubDate>Fri, 06 Sep 2013 19:00:00 -0500</pubDate>
+      <guid isPermaLink="true">http://niftylettuce.com/posts/multiple-dropbox-instances</guid>
       <author>niftylettuce</author>
       <description></description>
     </item>
